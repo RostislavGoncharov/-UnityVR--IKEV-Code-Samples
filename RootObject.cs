@@ -6,6 +6,7 @@ public class RootObject : MonoBehaviour
 {
     [SerializeField] int attachmentsNeeded;
     [SerializeField] GameObject assembledModel;
+    [SerializeField] string partTag;
 
     void Start()
     {
@@ -29,7 +30,7 @@ public class RootObject : MonoBehaviour
     {
         Instantiate(assembledModel, transform.localPosition, transform.localRotation);
 
-        GameObject[] parts = GameObject.FindGameObjectsWithTag("Part");
+        GameObject[] parts = GameObject.FindGameObjectsWithTag(partTag);
 
         foreach(GameObject part in parts)
         {
