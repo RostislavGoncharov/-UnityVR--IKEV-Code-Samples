@@ -7,7 +7,7 @@ public class SocketEvents : MonoBehaviour
 {
     XRSocketInteractor socket;
     protected IXRSelectInteractable attachedObject;
-    string correctPartTag;
+    [SerializeField] string correctPartTag;
 
     // Start is called before the first frame update
     void Awake()

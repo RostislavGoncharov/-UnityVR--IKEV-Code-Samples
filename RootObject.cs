@@ -6,7 +6,7 @@ public class RootObject : MonoBehaviour
 {
     [SerializeField] int attachmentsNeeded;
     [SerializeField] GameObject assembledModel;
-    [SerializeField] string partTag;
+    [SerializeField] string[] partTags;
 
     void Start()
     {
@@ -30,7 +30,15 @@ public class RootObject : MonoBehaviour
     {
         Instantiate(assembledModel, transform.localPosition, transform.localRotation);
 
-        GameObject[] parts = GameObject.FindGameObjectsWithTag(partTag);
+        //GameObject[] parts = new GameObject[partTags.Length]; //= GameObject.FindGameObjectsWithTag(partTag);
+
+        List<GameObject> parts = new List<GameObject>();
+
+        foreach(string tag in partTags)
+        {
+            parts.AddRange(GameObject.FindGameObjectsWithTag(tag));
+        }
+
 
         foreach(GameObject part in parts)
         {
