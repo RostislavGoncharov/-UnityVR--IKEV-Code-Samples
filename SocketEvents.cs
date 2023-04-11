@@ -7,6 +7,7 @@ public class SocketEvents : MonoBehaviour
 {
     XRSocketInteractor socket;
     protected IXRSelectInteractable attachedObject;
+    string correctPartTag;
 
     // Start is called before the first frame update
     void Awake()
@@ -26,7 +27,10 @@ public class SocketEvents : MonoBehaviour
 
     public void IncrementAttachments()
     {
-        GameManager.Instance.IncrementAttachments();
+        if (attachedObject.transform.CompareTag(correctPartTag))
+        {
+            GameManager.Instance.IncrementAttachments();
+        }   
     }
 
     public void DecrementAttachments()
