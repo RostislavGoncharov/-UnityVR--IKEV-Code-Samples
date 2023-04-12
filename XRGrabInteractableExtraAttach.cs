@@ -17,6 +17,8 @@ public class XRGrabInteractableExtraAttach : XRGrabInteractable
     public Transform grabTransform;
     public Transform socketAttachTransform;
 
+    [SerializeField] InteractionLayerMask partLayers;
+
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
         if (args.interactorObject.transform.CompareTag("Hand"))
@@ -24,8 +26,18 @@ public class XRGrabInteractableExtraAttach : XRGrabInteractable
             attachTransform = grabTransform;
         }
 
+        SetInteractionLayerMask();
+
         base.OnSelectEntered(args);
     }
+
+    /*
+    protected override void OnSelectExited(SelectExitEventArgs args)
+    {
+        SetInteractionLayerMaskToDefault();
+        base.OnSelectExited(args);
+    }
+    */
 
     public void SetAttachTransform()
     {
@@ -35,5 +47,15 @@ public class XRGrabInteractableExtraAttach : XRGrabInteractable
     public void SetGrabTransform()
     {
         attachTransform = grabTransform;
+    }
+
+    public void SetInteractionLayerMaskToDefault()
+    {
+        interactionLayers = InteractionLayerMask.GetMask("Default");
+    }
+
+    public void SetInteractionLayerMask()
+    {
+        interactionLayers = partLayers;
     }
 }

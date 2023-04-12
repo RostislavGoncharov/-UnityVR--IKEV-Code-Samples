@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit.Inputs;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     DebugUIControls debugUIControls;
+    InputActionManager inputActionManager;
 
     private void Awake()
     {
@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
 
+        // Temporary Quit functionality.
         debugUIControls = new DebugUIControls();
         debugUIControls.Debug.Quit.performed += OnQuitGame;
     }
@@ -40,7 +41,7 @@ public class GameManager : MonoBehaviour
         debugUIControls.Debug.Disable();
     }
 
-    // Implement logic for assembling the model. 
+    // Logic for assembling the model. 
 
     public int attachmentsNeeded;
 
@@ -67,6 +68,8 @@ public class GameManager : MonoBehaviour
             onSpawnModel?.Invoke();
         }
     }
+
+    // Logic for spawning and a box.
 
 
 }
