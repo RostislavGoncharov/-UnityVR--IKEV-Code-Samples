@@ -19,6 +19,8 @@ public class XRGrabInteractableExtraAttach : XRGrabInteractable
 
     [SerializeField] InteractionLayerMask partLayers;
 
+    public bool canBeAttached = false;
+
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
         if (args.interactorObject.transform.CompareTag("Hand"))
@@ -31,13 +33,15 @@ public class XRGrabInteractableExtraAttach : XRGrabInteractable
         base.OnSelectEntered(args);
     }
 
-    /*
     protected override void OnSelectExited(SelectExitEventArgs args)
     {
-        SetInteractionLayerMaskToDefault();
+        if (!canBeAttached)
+        {
+            SetInteractionLayerMaskToDefault();
+        }
+
         base.OnSelectExited(args);
     }
-    */
 
     public void SetAttachTransform()
     {

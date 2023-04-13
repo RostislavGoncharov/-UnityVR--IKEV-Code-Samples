@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class SocketEvents : MonoBehaviour
+public class SocketEvents : XRSocketInteractor
 {
-    XRSocketInteractor socket;
     protected IXRSelectInteractable attachedObject;
     [SerializeField] string correctPartTag;
 
-    // Start is called before the first frame update
-    void Awake()
+    protected override void OnEnable()
     {
-        socket = gameObject.GetComponent<XRSocketInteractor>();
+        base.OnEnable();
     }
 
     public virtual void Attach()
     {
-        attachedObject = socket.GetOldestInteractableSelected();
+        attachedObject = this.GetOldestInteractableSelected();
+        attachedObject.transform.GetComponent<Rigidbody>().WakeUp();
+        attachedObject.transform.GetComponent<Rigidbody>().isKinematic = false;
     }
 
     public virtual void Detach()
@@ -37,4 +37,29 @@ public class SocketEvents : MonoBehaviour
     {
         GameManager.Instance.DecrementAttachments();
     }
+
+    protected override void OnHoverEntered(HoverEnterEventArgs args)
+    {
+        XRGrabInteractableExtraAttach partToAttach = (XRGrabInteractableExtraAttach)args.interactableObject;
+
+        if (partToAttach)
+        {
+            partToAttach.canBeAttached = true;
+        }
+
+        base.OnHoverEntered(args);
+    }
+
+    protected override void OnHoverExited(HoverExitEventArgs args)
+    {
+        XRGrabInteractableExtraAttach partToAttach = (XRGrabInteractableExtraAttach)args.interactableObject;
+
+        if (partToAttach)
+        {
+            partToAttach.canBeAttached = false;
+        }
+
+        base.OnHoverExited(args);
+    }
+
 }
