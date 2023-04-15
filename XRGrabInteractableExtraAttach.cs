@@ -21,6 +21,12 @@ public class XRGrabInteractableExtraAttach : XRGrabInteractable
 
     public bool canBeAttached = false;
 
+    /*
+     * Separate the grab transform from the attach transform.
+     * Also, set specific interaction layer mask for the part when holding it,
+     * set it to default when released (unless near a suitable socket).
+     * This prevents parts from sticking to sockets when thrown at them.
+     */
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
         if (args.interactorObject.transform.CompareTag("Hand"))

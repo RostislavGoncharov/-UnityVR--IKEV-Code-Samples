@@ -5,7 +5,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class ExtendedSocketInteractor : XRSocketInteractor
 {
-    protected IXRSelectInteractable attachedObject;
+    protected XRGrabInteractableExtraAttach attachedObject;
     [SerializeField] string correctPartTag;
     [SerializeField] Vector3 colliderOffset;
 
@@ -61,7 +61,7 @@ public class ExtendedSocketInteractor : XRSocketInteractor
      * */
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
-        attachedObject = args.interactableObject;
+        attachedObject = (XRGrabInteractableExtraAttach)args.interactableObject;
 
         IncrementAttachments();
 
@@ -74,6 +74,8 @@ public class ExtendedSocketInteractor : XRSocketInteractor
                 BoxCollider childCollider = child.GetComponent<BoxCollider>();
                 child.localPosition = new Vector3(colliderOffset.x * childCollider.size.x, colliderOffset.y * childCollider.size.y, colliderOffset.z * childCollider.size.z);
                 child.localRotation = Quaternion.identity;
+
+                child.gameObject.layer = LayerMask.NameToLayer("TempColliders");
             }
         }
 
@@ -90,6 +92,7 @@ public class ExtendedSocketInteractor : XRSocketInteractor
             if (child.CompareTag("PartCollider"))
             {
                 child.SetParent(args.interactableObject.transform);
+                child.gameObject.layer = LayerMask.NameToLayer("Grab");
             }
         }
         
