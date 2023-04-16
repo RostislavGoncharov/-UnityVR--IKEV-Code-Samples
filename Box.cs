@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class Box : MonoBehaviour
 {
     [SerializeField] InputActionReference openBoxReference = null;
-    [SerializeField] GameObject partsToSpawn;
+    [SerializeField] GameObject[] partsToSpawn;
     bool canBeOpened = true;
 
     private void OnEnable()
@@ -27,9 +27,16 @@ public class Box : MonoBehaviour
 
     public void SpawnParts()
     {
-        Instantiate(partsToSpawn, transform.position, Quaternion.identity);
-
         DestroyBox();
+
+        foreach (GameObject part in partsToSpawn)
+        {
+            float rotationX = Random.Range(-100.0f, 100.0f);
+            float rotationY = Random.Range(-100.0f, 100.0f);
+            float rotationZ = Random.Range(-100.0f, 100.0f);
+            Instantiate(part, transform.localPosition + new Vector3(0, 1.0f, 0), Quaternion.Euler(rotationX, rotationY, rotationZ));
+            Debug.Log("Instantiated: " + part.name);
+        }
     }
 
     void DestroyBox()

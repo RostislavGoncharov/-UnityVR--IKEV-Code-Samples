@@ -57,11 +57,15 @@ public class ExtendedSocketInteractor : XRSocketInteractor
     /*
      * Increment attachments, then take control over the part's box collider.
      * Reparenting the collider is needed to make sure that a half-assembled piece of furniture
-     * still has proper collision.
+     * still has proper collision. 
+     * The layer is set to TempColliders to prevent any further socket interactions
+     * if the part is already attached to a socket.
      * */
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
         attachedObject = (XRGrabInteractableExtraAttach)args.interactableObject;
+
+        Debug.Log(attachedObject.name);
 
         IncrementAttachments();
 
@@ -82,7 +86,7 @@ public class ExtendedSocketInteractor : XRSocketInteractor
         base.OnSelectEntered(args);
     }
 
-    //Decrement attachments, then give the collider back to the part.
+    //Decrement attachments, then give the collider back to the part. Reset the collider's layer to enable socket interactions.
     protected override void OnSelectExited(SelectExitEventArgs args)
     {
         DecrementAttachments();
@@ -95,8 +99,6 @@ public class ExtendedSocketInteractor : XRSocketInteractor
                 child.gameObject.layer = LayerMask.NameToLayer("Grab");
             }
         }
-        
-        base.OnSelectExited(args);
     }
 
 }

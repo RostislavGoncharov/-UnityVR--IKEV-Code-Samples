@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.XR.Interaction.Toolkit.Inputs;
 
 public class GameManager : MonoBehaviour
+
 {
     // Implement singleton functionality, engage input actions.
     public static GameManager Instance { get; private set; }
@@ -52,12 +52,14 @@ public class GameManager : MonoBehaviour
     public void IncrementAttachments()
     {
         attachmentsMade++;
+        Debug.Log("Attached! Attachments: " + attachmentsMade);
         CheckCompletion();
     }
 
     public void DecrementAttachments()
     {
         attachmentsMade--;
+        Debug.Log("Unattached! Attachments: " + attachmentsMade);
     }
 
     void CheckCompletion()
