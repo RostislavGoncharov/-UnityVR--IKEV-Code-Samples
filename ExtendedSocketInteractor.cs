@@ -80,6 +80,7 @@ public class ExtendedSocketInteractor : XRSocketInteractor
                 child.localRotation = Quaternion.identity;
 
                 child.gameObject.layer = LayerMask.NameToLayer("TempColliders");
+
             }
         }
 
@@ -99,6 +100,7 @@ public class ExtendedSocketInteractor : XRSocketInteractor
                 child.gameObject.layer = LayerMask.NameToLayer("Grab");
             }
         }
-    }
 
+        base.OnSelectExited(args);
+    }
 }
