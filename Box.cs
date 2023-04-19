@@ -5,7 +5,7 @@ public class Box : MonoBehaviour
 {
     [SerializeField] InputActionReference openBoxReference = null;
     [SerializeField] GameObject[] partsToSpawn;
-    bool canBeOpened = true;
+    bool canBeOpened = false;
 
     private void OnEnable()
     {
@@ -43,7 +43,7 @@ public class Box : MonoBehaviour
             Rigidbody partRigidbody = part.GetComponent<Rigidbody>();
             if (partRigidbody)
             {
-                partRigidbody.AddForce(new Vector3(0, 0, 10000), ForceMode.Impulse);
+                partRigidbody.AddRelativeForce(new Vector3(0, 0, 10000), ForceMode.Impulse);
                 Debug.Log(partRigidbody.velocity);
             }
         }

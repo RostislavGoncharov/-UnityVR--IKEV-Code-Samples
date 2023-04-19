@@ -69,7 +69,12 @@ public class ExtendedSocketInteractor : XRSocketInteractor
 
         IncrementAttachments();
 
-        foreach(Transform child in attachedObject.transform)
+        if (attachedObject == null)
+        {
+            return;
+        }
+
+        foreach (Transform child in attachedObject.transform)
         {
             if (child.CompareTag("PartCollider"))
             {
@@ -100,6 +105,8 @@ public class ExtendedSocketInteractor : XRSocketInteractor
                 child.gameObject.layer = LayerMask.NameToLayer("Grab");
             }
         }
+
+        attachedObject = null;
 
         base.OnSelectExited(args);
     }
