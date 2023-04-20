@@ -29,11 +29,6 @@ public class XRGrabInteractableExtraAttach : XRGrabInteractable
      */
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
-        if (args.interactorObject.transform.CompareTag("Hand"))
-        {
-            attachTransform = grabTransform;
-        }
-
         SetInteractionLayerMask();
 
         base.OnSelectEntered(args);
@@ -46,7 +41,23 @@ public class XRGrabInteractableExtraAttach : XRGrabInteractable
             SetInteractionLayerMaskToDefault();
         }
 
+        SetAttachTransform();
+
         base.OnSelectExited(args);
+    }
+
+    protected override void OnHoverEntered(HoverEnterEventArgs args)
+    {
+        if (args.interactorObject.transform.CompareTag("Hand"))
+        {
+            SetGrabTransform();
+        }
+        else
+        {
+            SetAttachTransform();
+        }
+        
+        base.OnHoverEntered(args);
     }
 
     public void SetAttachTransform()
