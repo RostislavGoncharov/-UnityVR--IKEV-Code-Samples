@@ -40,6 +40,7 @@ public class Box : MonoBehaviour
             Instantiate(part, transform.localPosition + new Vector3(offsetX, 1.0f, offsetZ), Quaternion.Euler(rotationX, rotationY, rotationZ));
             Debug.Log("Instantiated: " + part.name);
 
+            // Make this work later
             Rigidbody partRigidbody = part.GetComponent<Rigidbody>();
             if (partRigidbody)
             {

@@ -10,6 +10,7 @@ public class DisassemblableObject : MonoBehaviour
         foreach (GameObject part in parts)
         {
             Instantiate(part, transform.localPosition, transform.localRotation);
+            part.GetComponent<Rigidbody>().AddExplosionForce(100.0f, transform.localPosition, 10.0f);
             Destroy(this.gameObject);
         }
     }

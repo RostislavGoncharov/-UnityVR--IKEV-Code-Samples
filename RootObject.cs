@@ -1,36 +1,35 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RootObject : MonoBehaviour
 {
-    [SerializeField] int attachmentsNeeded;
+    public int attachmentsNeeded;
+
     [SerializeField] GameObject assembledModel;
     [SerializeField] string[] partTags;
+    [SerializeField] int taskNumber;
 
     void Start()
     {
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.attachmentsNeeded = attachmentsNeeded;
+            GameManager.Instance.BeginTask(this, taskNumber);
         }
     }
 
     private void OnEnable()
     {
-        GameManager.onSpawnModel += SpawnModel;
+        //GameManager.onSpawnModel += SpawnModel;
     }
 
     private void OnDisable()
     {
-        GameManager.onSpawnModel -= SpawnModel;
+        //GameManager.onSpawnModel -= SpawnModel;
     }
 
-    void SpawnModel()
+    public void SpawnModel()
     {
         Instantiate(assembledModel, transform.localPosition, transform.localRotation);
-
-        //GameObject[] parts = new GameObject[partTags.Length]; //= GameObject.FindGameObjectsWithTag(partTag);
 
         List<GameObject> parts = new List<GameObject>();
 
