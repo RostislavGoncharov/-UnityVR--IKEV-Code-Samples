@@ -39,6 +39,7 @@ public class ExtendedSocketInteractor : XRSocketInteractor
         if (partToAttach)
         {
             partToAttach.canBeAttached = true;
+            Debug.Log("Can be attached: " + partToAttach.name);
         }
 
         base.OnHoverEntered(args);

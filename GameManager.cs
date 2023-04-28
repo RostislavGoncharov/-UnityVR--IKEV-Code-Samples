@@ -93,7 +93,6 @@ public class GameManager : MonoBehaviour
             rootObject = root;
             taskNumber = task;
             attachmentsNeeded = rootObject.attachmentsNeeded;
-            onSpawnModel += rootObject.SpawnModel;
         }
         
         public RootObject rootObject;
@@ -101,9 +100,6 @@ public class GameManager : MonoBehaviour
         
         public int attachmentsNeeded;
         int attachmentsMade = 0;
-
-        public delegate void SpawnModel();
-        public static SpawnModel onSpawnModel;
 
         public void IncrementAttachments()
         {
@@ -122,7 +118,7 @@ public class GameManager : MonoBehaviour
         {
             if (attachmentsMade == attachmentsNeeded)
             {
-                onSpawnModel?.Invoke();
+                rootObject.SpawnModel();
                 Debug.Log("Model spawned");
                 GameManager.Instance.FinishTask(taskNumber);
                 Debug.Log(GameManager.Instance.taskTrackerList.Count);
@@ -132,13 +128,13 @@ public class GameManager : MonoBehaviour
 
     public void BeginTask(RootObject rootObject, int taskNumber)
     {
-        TaskTracker taskTracker = new TaskTracker(rootObject, taskNumber);
-        if (taskTracker != null)
+        TaskTracker task = new TaskTracker(rootObject, taskNumber);
+        if (task != null)
         {
-            taskTrackerList.Add(taskTracker);
+            taskTrackerList.Add(task);
         }
 
-        Debug.Log("Task Started: " + taskTracker.taskNumber);
+        Debug.Log("Task Started: " + task.taskNumber);
     }
 
     public void FinishTask(int taskNumber)
@@ -147,6 +143,7 @@ public class GameManager : MonoBehaviour
         if (task != null)
         {
             taskTrackerList.Remove(task);
+            Debug.Log("Task " + task.taskNumber + " complete!");
         } 
     }
 }
