@@ -46,7 +46,7 @@ public class XRGrabInteractableExtraAttach : XRGrabInteractable
 
     protected override void OnHoverEntered(HoverEnterEventArgs args)
     {
-        if (args.interactorObject.transform.CompareTag("Hand"))
+        if (args.interactorObject.transform.CompareTag("Hand") && !canBeAttached)
         {
             SetGrabTransform();
         }

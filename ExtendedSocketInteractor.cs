@@ -66,7 +66,7 @@ public class ExtendedSocketInteractor : XRSocketInteractor
     {
         attachedObject = (XRGrabInteractableExtraAttach)args.interactableObject;
 
-        Debug.Log(attachedObject.name);
+        attachedObject.canBeAttached = false;
 
         IncrementAttachments();
 
