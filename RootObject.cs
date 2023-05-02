@@ -4,6 +4,8 @@ using UnityEngine;
 public class RootObject : MonoBehaviour
 {
     public int attachmentsNeeded;
+    public int nextBoxIndex = -1;
+    public int tvScreenIndex;
 
     [SerializeField] GameObject assembledModel;
     [SerializeField] string[] partTags;

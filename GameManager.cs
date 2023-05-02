@@ -1,6 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 
@@ -8,8 +10,16 @@ public class GameManager : MonoBehaviour
     // Implement singleton functionality, engage input actions.
     public static GameManager Instance { get; private set; }
     List<TaskTracker> taskTrackerList = new List<TaskTracker>();
+    [SerializeField] List<TaskText> taskTextList = new List<TaskText>();
+    [SerializeField] List<Box> boxList = new List<Box>();
+    [SerializeField] Transform boxSpawnPoint;
+    [SerializeField] TV tv;
+    [SerializeField] Image endMessage;
+    [SerializeField] int tasksTotal;
 
-    DebugUIControls debugUIControls;
+    int tasksCompleted = 0;
+
+    bool boxPickedUp = false;
 
     private void Awake()
     {
@@ -21,45 +31,17 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
-
-        // Temporary Quit functionality.
-        debugUIControls = new DebugUIControls();
-        debugUIControls.Debug.Quit.performed += OnQuitGame;
     }
 
-    private void OnQuitGame(InputAction.CallbackContext context)
+    public void QuitGame()
     {
         Application.Quit();
     }
 
-    private void OnEnable()
+    public void Restart()
     {
-        debugUIControls.Debug.Enable();
+        SceneManager.LoadScene(0);
     }
-
-    private void OnDisable()
-    {
-        debugUIControls.Debug.Disable();
-    }
-
-    // Logic for assembling the model. 
-
-    /*
-     * public int attachmentsNeeded;
-
-    [SerializeField] int attachmentsMade = 0;
-
-    public delegate void SpawnModel();
-    public static SpawnModel onSpawnModel;
-
-    void CheckCompletion()
-    {
-        if (attachmentsMade == attachmentsNeeded)
-        {
-            onSpawnModel?.Invoke();
-        }
-    }
-    */
 
     public void IncrementAttachments(int taskNumber)
     {
@@ -93,13 +75,17 @@ public class GameManager : MonoBehaviour
             rootObject = root;
             taskNumber = task;
             attachmentsNeeded = rootObject.attachmentsNeeded;
+            nextBoxIndex = rootObject.nextBoxIndex;
+            tvScreenIndex = rootObject.tvScreenIndex;
         }
         
         public RootObject rootObject;
+
+        public int tvScreenIndex;
+        public int nextBoxIndex;
         public int taskNumber;
-        
         public int attachmentsNeeded;
-        int attachmentsMade = 0;
+        public int attachmentsMade = 0;
 
         public void IncrementAttachments()
         {
@@ -120,8 +106,8 @@ public class GameManager : MonoBehaviour
             {
                 rootObject.SpawnModel();
                 Debug.Log("Model spawned");
-                GameManager.Instance.FinishTask(taskNumber);
-                Debug.Log(GameManager.Instance.taskTrackerList.Count);
+                Instance.FinishTask(taskNumber);
+                Debug.Log(Instance.taskTrackerList.Count);
             }
         }
     }
@@ -129,10 +115,17 @@ public class GameManager : MonoBehaviour
     public void BeginTask(RootObject rootObject, int taskNumber)
     {
         TaskTracker task = new TaskTracker(rootObject, taskNumber);
-        if (task != null)
+
+        TaskTracker existingTask = taskTrackerList.Find(x => x.taskNumber == taskNumber);
+
+        if (existingTask != null)
         {
-            taskTrackerList.Add(task);
+            task.attachmentsMade = existingTask.attachmentsMade;
+            taskTrackerList.Remove(existingTask);
+            Debug.Log("Task continued: " + task.taskNumber + ", attachments made: " + task.attachmentsMade);
         }
+
+        taskTrackerList.Add(task);
 
         Debug.Log("Task Started: " + task.taskNumber);
     }
@@ -142,8 +135,68 @@ public class GameManager : MonoBehaviour
         TaskTracker task = taskTrackerList.Find(x => x.taskNumber == taskNumber);
         if (task != null)
         {
+            if (task.nextBoxIndex != -1)
+            {
+                SpawnBox(task.nextBoxIndex);
+            }
+
+            if (task.tvScreenIndex != 0)
+            {
+                SelectTVImage(task.tvScreenIndex);
+            }
             taskTrackerList.Remove(task);
             Debug.Log("Task " + task.taskNumber + " complete!");
+            TaskText taskText = taskTextList.Find(x => x.taskNumber == taskNumber);
+            taskText.CrossOut();
+            AudioManager.Instance.PlaySoundEffect(5);
+
+            tasksCompleted++;
+
+            if (tasksCompleted >= tasksTotal)
+            {
+                ShowEndMessage();
+            }
         } 
+    }
+
+    void ShowEndMessage()
+    {
+        endMessage.gameObject.SetActive(true);
+    }
+
+    //Logic for box spawning
+
+    public void SpawnBox(int boxIndex)
+    {
+        if (boxIndex >= boxList.Count)
+        {
+            Debug.Log("Box index out of bounds!");
+            return;
+        }
+
+        Box box = Instantiate(boxList[boxIndex], boxSpawnPoint);
+        boxPickedUp = false;
+        StartCoroutine(RingBell());
+    }
+
+    IEnumerator RingBell()
+    {
+        yield return new WaitForSeconds(2);
+
+        while(!boxPickedUp)
+        {
+            AudioManager.Instance.PlaySoundEffect(3);
+            yield return new WaitForSeconds(5);
+        }
+    }
+
+    public void SetBoxPickedUp(bool value)
+    {
+        boxPickedUp = value;
+    }
+
+    public void SelectTVImage(int index)
+    {
+        tv.SelectImage(index);
     }
 }

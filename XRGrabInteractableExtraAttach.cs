@@ -29,6 +29,16 @@ public class XRGrabInteractableExtraAttach : XRGrabInteractable
     {
         SetInteractionLayerMask();
 
+        if (args.interactorObject.transform.CompareTag("Hand"))
+        {
+            AudioManager.Instance.PlaySoundEffect(2);
+
+            if (GetComponent<Box>() != null)
+            {
+                GameManager.Instance.SetBoxPickedUp(true);
+            }
+        }
+
         base.OnSelectEntered(args);
     }
 

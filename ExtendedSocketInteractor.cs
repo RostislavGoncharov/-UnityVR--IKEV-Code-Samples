@@ -39,7 +39,6 @@ public class ExtendedSocketInteractor : XRSocketInteractor
         if (partToAttach)
         {
             partToAttach.canBeAttached = true;
-            Debug.Log("Can be attached: " + partToAttach.name);
         }
 
         base.OnHoverEntered(args);
@@ -67,6 +66,8 @@ public class ExtendedSocketInteractor : XRSocketInteractor
         attachedObject = (XRGrabInteractableExtraAttach)args.interactableObject;
 
         attachedObject.canBeAttached = false;
+
+        AudioManager.Instance.PlaySoundEffect(0);
 
         IncrementAttachments();
 
@@ -99,6 +100,8 @@ public class ExtendedSocketInteractor : XRSocketInteractor
     protected override void OnSelectExited(SelectExitEventArgs args)
     {
         DecrementAttachments();
+
+        AudioManager.Instance.PlaySoundEffect(1);
 
         foreach (Transform child in transform)
         {

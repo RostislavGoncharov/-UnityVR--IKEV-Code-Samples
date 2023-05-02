@@ -9,7 +9,13 @@ public class DisassemblableObject : MonoBehaviour
     {
         foreach (GameObject part in parts)
         {
-            Instantiate(part, transform.localPosition, transform.localRotation);
+            float rotationX = Random.Range(-100.0f, 100.0f);
+            float rotationY = Random.Range(-100.0f, 100.0f);
+            float rotationZ = Random.Range(-100.0f, 100.0f);
+            float offsetX = Random.Range(-0.1f, 0.1f);
+            float offsetZ = Random.Range(-0.1f, 0.1f);
+
+            Instantiate(part, transform.position + new Vector3(offsetX, transform.position.y, offsetZ), Quaternion.Euler(rotationX, rotationY, rotationZ));
             part.GetComponent<Rigidbody>().AddExplosionForce(100.0f, transform.localPosition, 10.0f);
             Destroy(this.gameObject);
         }
