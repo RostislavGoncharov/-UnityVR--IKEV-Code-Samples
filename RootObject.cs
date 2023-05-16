@@ -1,6 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * This class handles the functions of a "root object"
+ * which defines the number of correct attachments needed to spawn the assembled model,
+ * the index of the next box to spawn after successful assembly,
+ * and the index of the instruction to show.
+ */
 public class RootObject : MonoBehaviour
 {
     public int attachmentsNeeded;
@@ -19,18 +25,10 @@ public class RootObject : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        //GameManager.onSpawnModel += SpawnModel;
-    }
-
-    private void OnDisable()
-    {
-        //GameManager.onSpawnModel -= SpawnModel;
-    }
-
     public void SpawnModel()
     {
+        // Spawn the assembled model, then find and destroy all relevant parts in the scene.
+
         Instantiate(assembledModel, transform.localPosition, transform.localRotation);
 
         List<GameObject> parts = new List<GameObject>();

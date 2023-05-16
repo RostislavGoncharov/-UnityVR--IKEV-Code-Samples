@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;
 
+// This class allows the GameManager to cross out the completed tasks from the list.
+
 public class TaskText : MonoBehaviour
 {
     TextMeshProUGUI text;

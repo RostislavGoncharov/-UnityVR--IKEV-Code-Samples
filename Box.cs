@@ -1,6 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/*
+ * This class handles all functionality of a box with furniture parts:
+ * opening the box, spawning the parts, destroying the box afterwards
+ */
 public class Box : MonoBehaviour
 {
     [SerializeField] InputActionReference openBoxReference = null;
@@ -52,14 +56,6 @@ public class Box : MonoBehaviour
 
             Instantiate(part, transform.position + new Vector3(offsetX, 0.5f, offsetZ), Quaternion.Euler(rotationX, rotationY, rotationZ));
             Debug.Log("Instantiated: " + part.name);
-
-            // Make this work later
-            Rigidbody partRigidbody = part.GetComponent<Rigidbody>();
-            if (partRigidbody)
-            {
-                partRigidbody.AddRelativeForce(new Vector3(0, 0, 10000), ForceMode.Impulse);
-                Debug.Log(partRigidbody.velocity);
-            }
         }
     }
 

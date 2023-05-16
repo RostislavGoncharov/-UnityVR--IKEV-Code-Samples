@@ -1,7 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+
+/*
+ * This class handles the functionality of a Stool Leg object.
+ * It is needed to turn off the socket in the opposite leg when attached to the Stool Top
+ * (otherwise two parts could be attached in the same space).
+ */
 
 public class StoolLegGrabInteractable : XRGrabInteractableExtraAttach
 {

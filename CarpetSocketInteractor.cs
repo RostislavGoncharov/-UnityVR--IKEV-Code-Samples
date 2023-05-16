@@ -1,5 +1,7 @@
 using UnityEngine.XR.Interaction.Toolkit;
 
+// This class handles the interactions between the box and the carpet
+
 public class CarpetSocketInteractor : XRSocketInteractor
 {
     int tvScreenIndex = 5;
@@ -8,6 +10,7 @@ public class CarpetSocketInteractor : XRSocketInteractor
     {
         base.OnHoverEntered(args);
 
+        // Automatically attach the box to the carpet when in range
         XRGrabInteractableExtraAttach box = (XRGrabInteractableExtraAttach)args.interactableObject;
         box.canBeAttached = true;
         interactionManager.SelectEnter(this, (IXRSelectInteractable)box);

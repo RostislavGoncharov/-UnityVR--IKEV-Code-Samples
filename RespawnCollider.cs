@@ -1,6 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+/* This is a "safety net" collider which respawns objects inside the room
+ * if they have somehow fallen out of bounds (to make the demo easier to present/playtest).
+ */
 
 public class RespawnCollider : MonoBehaviour
 {

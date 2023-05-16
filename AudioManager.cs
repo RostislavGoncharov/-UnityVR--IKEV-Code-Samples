@@ -1,6 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+// This class is responsible for playing all 2D one-shot sound effects
 
 [RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour

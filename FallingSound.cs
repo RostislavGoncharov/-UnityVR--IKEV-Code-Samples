@@ -1,6 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+// A simple script to implement falling sounds in objects. Might become part of the Audio Manager later.
 
 [RequireComponent(typeof(AudioSource))]
 public class FallingSound : MonoBehaviour

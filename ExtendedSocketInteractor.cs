@@ -1,7 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+
+/* This class extends the XRSocketInteractor functionality
+ * by calling the GameManager instance to calculate attachment count.
+ * Additionally, it makes the socket the parent of the attached part's collider 
+ * (which needs to be a separate object), so that the collider keeps working.
+ * In this implementation it only helps with the collisions when 2 parts are attached to each other,
+ * while any further parts will still have non-working colliders (good enough for the demo).
+ */
 
 public class ExtendedSocketInteractor : XRSocketInteractor
 {

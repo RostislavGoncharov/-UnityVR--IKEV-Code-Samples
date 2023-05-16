@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/*
+ * This class is a singleton which handles all key game interactions,
+ * specifically when it comes to tracking tasks and counting attachments.
+ */
+
 public class GameManager : MonoBehaviour
 
 {

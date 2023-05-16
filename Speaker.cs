@@ -1,6 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/* This class handles the functionality of a speaker object for demo purposes.
+ * It will be reworked/extended later.
+ */
+
 [RequireComponent(typeof(AudioSource))]
 public class Speaker : MonoBehaviour
 {
