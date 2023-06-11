@@ -20,8 +20,9 @@ public class DisassemblableObject : MonoBehaviour
             float offsetZ = Random.Range(-0.1f, 0.1f);
 
             Instantiate(part, transform.position + new Vector3(offsetX, transform.position.y, offsetZ), Quaternion.Euler(rotationX, rotationY, rotationZ));
-            part.GetComponent<Rigidbody>().AddExplosionForce(100.0f, transform.localPosition, 10.0f);
-            Destroy(this.gameObject);
+            part.GetComponent<Rigidbody>().AddExplosionForce(100.0f, transform.localPosition, 10.0f);            
         }
+
+        Destroy(this.gameObject);
     }
 }

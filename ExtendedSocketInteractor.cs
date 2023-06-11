@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using System.Collections.Generic;
 
 /* This class extends the XRSocketInteractor functionality
  * by calling the GameManager instance to calculate attachment count.
@@ -12,7 +13,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class ExtendedSocketInteractor : XRSocketInteractor
 {
     protected XRGrabInteractableExtraAttach attachedObject;
-    [SerializeField] string correctPartTag;
+    [SerializeField] List<string> correctPartTags = new List<string>();
     [SerializeField] Vector3 colliderOffset;
 
     public int taskNumber;
@@ -24,7 +25,7 @@ public class ExtendedSocketInteractor : XRSocketInteractor
 
     public void IncrementAttachments()
     {
-        if (attachedObject.transform.CompareTag(correctPartTag))
+        if (correctPartTags.Contains(attachedObject.tag))
         {
             GameManager.Instance.IncrementAttachments(taskNumber);
         }   
@@ -32,7 +33,7 @@ public class ExtendedSocketInteractor : XRSocketInteractor
 
     public void DecrementAttachments()
     {
-        if (attachedObject.transform.CompareTag(correctPartTag))
+        if (correctPartTags.Contains(attachedObject.tag))
         {
             GameManager.Instance.DecrementAttachments(taskNumber);
         }
@@ -69,6 +70,11 @@ public class ExtendedSocketInteractor : XRSocketInteractor
      * */
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
+        if ((XRGrabInteractableExtraAttach)args.interactableObject == null)
+        {
+            return;
+        }
+
         attachedObject = (XRGrabInteractableExtraAttach)args.interactableObject;
 
         attachedObject.canBeAttached = false;
