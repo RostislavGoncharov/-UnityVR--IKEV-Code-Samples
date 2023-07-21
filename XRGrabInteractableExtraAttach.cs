@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 /*
- * This class extends the XRInteractable functionality
+ * This class extends the XRGrabInteractable functionality
  * by allowing you to assign separate transforms 
  * for grab and socket interactions.
  */
