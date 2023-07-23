@@ -8,6 +8,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
+using TMPro;
 
 public class RayToggler : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class RayToggler : MonoBehaviour
     public float hapticDuration = 0.2f;
 
     [SerializeField] XRRayInteractor _rayInteractor;
+    [SerializeField] TextMeshProUGUI _promptText;
 
     XRRayInteractor _rayInteractorTeleport;
 
@@ -24,11 +26,13 @@ public class RayToggler : MonoBehaviour
 
     RaycastHit _raycastHit;
     bool _readyToTeleport;
+    Canvas _promptUI;
 
     private void Start()
     {
         _rayInteractorTeleport = GetComponent<XRRayInteractor>();
         _audioSource = GetComponent<AudioSource>();
+        _promptUI = _promptText.GetComponentInParent<Canvas>();
     }
 
     void Update()
@@ -40,6 +44,8 @@ public class RayToggler : MonoBehaviour
             _rayInteractorTeleport.enabled = true;
             _rayInteractor.enabled = false;
             _readyToTeleport = true;
+            _promptText.text = "Release: Teleport";
+            _promptUI.enabled = true;
         }
         else
         {
@@ -64,5 +70,7 @@ public class RayToggler : MonoBehaviour
             _rayInteractorTeleport.SendHapticImpulse(hapticAmplitude, hapticDuration);
             _audioSource.Play();
         }
+
+        _promptUI.enabled = false;
     }
 }
