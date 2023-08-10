@@ -42,6 +42,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        tv.PlayVideo(0);
+    }
+
     private void Update()
     {
         // TEMPORARY
