@@ -14,12 +14,10 @@ using UnityEngine.Video;
 public class GameManager : MonoBehaviour
 
 {
-    // Implement singleton functionality, engage input actions.
     public static GameManager Instance { get; private set; }
     List<TaskTracker> taskTrackerList = new List<TaskTracker>();
     [SerializeField] List<TaskText> taskTextList = new List<TaskText>();
     [SerializeField] List<Box> boxList = new List<Box>();
-    [SerializeField] List<VideoClip> videoInstructionsList = new List<VideoClip>();
     [SerializeField] Transform boxSpawnPoint;
     [SerializeField] TV tv;
     [SerializeField] Image endMessage;
