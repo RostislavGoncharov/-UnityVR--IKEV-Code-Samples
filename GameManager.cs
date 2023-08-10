@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using UnityEngine.Video;
 
 /*
  * This class is a singleton which handles all key game interactions,
@@ -17,10 +19,14 @@ public class GameManager : MonoBehaviour
     List<TaskTracker> taskTrackerList = new List<TaskTracker>();
     [SerializeField] List<TaskText> taskTextList = new List<TaskText>();
     [SerializeField] List<Box> boxList = new List<Box>();
+    [SerializeField] List<VideoClip> videoInstructionsList = new List<VideoClip>();
     [SerializeField] Transform boxSpawnPoint;
     [SerializeField] TV tv;
     [SerializeField] Image endMessage;
     [SerializeField] int tasksTotal;
+
+    // TEMPORARY
+    [SerializeField] InputActionReference quitAction;
 
     int tasksCompleted = 0;
 
@@ -35,6 +41,15 @@ public class GameManager : MonoBehaviour
         else
         {
             Instance = this;
+        }
+    }
+
+    private void Update()
+    {
+        // TEMPORARY
+        if (quitAction.action.IsPressed())
+        {
+            QuitGame();
         }
     }
 
