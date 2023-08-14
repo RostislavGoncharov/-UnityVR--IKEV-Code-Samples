@@ -42,7 +42,23 @@ public class TV : XRBaseInteractable
     {
         videoPlayer.Stop();
         videoPlayer.clip = videos[videoIndex];
+
+        if (videoIndex == 0)
+        {
+            videoPlayer.loopPointReached += HandleFirstVideoEnd;
+        }
+
+        else
+        {
+            videoPlayer.loopPointReached -= HandleFirstVideoEnd;
+        }
+
         videoPlayer.Play();
+    }
+
+    void HandleFirstVideoEnd(VideoPlayer vp)
+    {
+        GameManager.Instance.ToggleControllers(true);
     }
 
 }

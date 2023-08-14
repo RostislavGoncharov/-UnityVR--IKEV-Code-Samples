@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] List<Box> boxList = new List<Box>();
     [SerializeField] Transform boxSpawnPoint;
     [SerializeField] TV tv;
+    [SerializeField] GameObject controllers;
     [SerializeField] Image endMessage;
     [SerializeField] int tasksTotal;
 
@@ -40,6 +41,8 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        ToggleControllers(false);
     }
 
     private void Start()
@@ -54,6 +57,11 @@ public class GameManager : MonoBehaviour
         {
             QuitGame();
         }
+    }
+
+    public void ToggleControllers(bool value)
+    {
+        controllers.SetActive(value);
     }
 
     public void QuitGame()
