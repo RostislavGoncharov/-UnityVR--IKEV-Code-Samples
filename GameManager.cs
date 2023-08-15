@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
-using UnityEngine.Video;
+using UnityEngine.XR.Interaction.Toolkit;
 
 /*
  * This class is a singleton which handles all key game interactions,
@@ -62,6 +62,18 @@ public class GameManager : MonoBehaviour
     public void ToggleControllers(bool value)
     {
         controllers.SetActive(value);
+    }
+
+    // FIX LATER
+    public void MakeControllersVibrate(float amplitude, float duration)
+    {
+        ActionBasedController[] _controllers = controllers.GetComponentsInChildren<ActionBasedController>();
+        Debug.Log(_controllers.Length);
+
+        foreach (ActionBasedController controller in _controllers)
+        {
+            controller.SendHapticImpulse(amplitude, duration);
+        }
     }
 
     public void QuitGame()

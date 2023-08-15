@@ -59,6 +59,7 @@ public class TV : XRBaseInteractable
     void HandleFirstVideoEnd(VideoPlayer vp)
     {
         GameManager.Instance.ToggleControllers(true);
+        GameManager.Instance.MakeControllersVibrate(0.5f, 1.5f);
     }
 
 }
