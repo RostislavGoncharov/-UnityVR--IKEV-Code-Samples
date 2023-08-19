@@ -15,7 +15,9 @@ public class GameManager : MonoBehaviour
 
 {
     public static GameManager Instance { get; private set; }
+
     List<TaskTracker> taskTrackerList = new List<TaskTracker>();
+
     [SerializeField] List<TaskText> taskTextList = new List<TaskText>();
     [SerializeField] List<Box> boxList = new List<Box>();
     [SerializeField] Transform boxSpawnPoint;
@@ -43,11 +45,12 @@ public class GameManager : MonoBehaviour
         }
 
         ToggleControllers(false);
+        AudioManager.Instance.ToggleEnvironmentSounds(false);
     }
 
     private void Start()
     {
-        tv.PlayVideo(0);
+        TutorialManager.Instance.BeginTutorial();
     }
 
     private void Update()
@@ -64,7 +67,6 @@ public class GameManager : MonoBehaviour
         controllers.SetActive(value);
     }
 
-    // FIX LATER
     public void MakeControllersVibrate(float amplitude, float duration)
     {
         ActionBasedController[] _controllers = controllers.GetComponentsInChildren<ActionBasedController>();

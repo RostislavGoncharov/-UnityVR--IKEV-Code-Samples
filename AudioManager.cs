@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance { get; private set; }
 
     [SerializeField] List<AudioClip> soundEffects = new List<AudioClip>();
+    [SerializeField] List<AudioSource> environmentSounds = new List<AudioSource>();
 
     AudioSource audioSource;
 
@@ -29,5 +30,13 @@ public class AudioManager : MonoBehaviour
     public void PlaySoundEffect(int index)
     {
         audioSource.PlayOneShot(soundEffects[index]);
+    }
+
+    public void ToggleEnvironmentSounds(bool value)
+    {
+        foreach (AudioSource sound in environmentSounds)
+        {
+            sound.enabled = value;
+        }
     }
 }

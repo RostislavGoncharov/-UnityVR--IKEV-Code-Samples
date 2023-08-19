@@ -12,9 +12,9 @@ using UnityEngine.Video;
 public class TV : XRBaseInteractable
 {
     [SerializeField] List<Sprite> images = new List<Sprite>();
-    [SerializeField] List<VideoClip> videos = new List<VideoClip>();
+    //[SerializeField] List<VideoClip> videos = new List<VideoClip>();
     [SerializeField] Image screen;
-    [SerializeField] VideoPlayer videoPlayer;
+    //[SerializeField] VideoPlayer videoPlayer;
 
     public void SelectImage(int imageIndex)
     {
@@ -38,28 +38,28 @@ public class TV : XRBaseInteractable
         }
     }
 
-    public void PlayVideo(int videoIndex)
-    {
-        videoPlayer.Stop();
-        videoPlayer.clip = videos[videoIndex];
+    //public void playvideo(int videoindex)
+    //{
+    //    videoplayer.stop();
+    //    videoplayer.clip = videos[videoindex];
 
-        if (videoIndex == 0)
-        {
-            videoPlayer.loopPointReached += HandleFirstVideoEnd;
-        }
+    //    if (videoindex == 0)
+    //    {
+    //        videoplayer.looppointreached += handlefirstvideoend;
+    //    }
 
-        else
-        {
-            videoPlayer.loopPointReached -= HandleFirstVideoEnd;
-        }
+    //    else
+    //    {
+    //        videoplayer.looppointreached -= handlefirstvideoend;
+    //    }
 
-        videoPlayer.Play();
-    }
+    //    videoplayer.play();
+    //}
 
-    void HandleFirstVideoEnd(VideoPlayer vp)
-    {
-        GameManager.Instance.ToggleControllers(true);
-        GameManager.Instance.MakeControllersVibrate(0.5f, 1.5f);
-    }
+    //void handlefirstvideoend(videoplayer vp)
+    //{
+    //    gamemanager.instance.togglecontrollers(true);
+    //    gamemanager.instance.makecontrollersvibrate(0.5f, 1.5f);
+    //}
 
 }
