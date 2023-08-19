@@ -70,7 +70,6 @@ public class GameManager : MonoBehaviour
     public void MakeControllersVibrate(float amplitude, float duration)
     {
         ActionBasedController[] _controllers = controllers.GetComponentsInChildren<ActionBasedController>();
-        Debug.Log(_controllers.Length);
 
         foreach (ActionBasedController controller in _controllers)
         {

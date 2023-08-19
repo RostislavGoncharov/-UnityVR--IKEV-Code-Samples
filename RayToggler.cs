@@ -22,16 +22,15 @@ public class RayToggler : MonoBehaviour
 
     XRRayInteractor _rayInteractorTeleport;
 
-    AudioSource _audioSource;
-
     RaycastHit _raycastHit;
     bool _readyToTeleport;
     Canvas _promptUI;
 
+    string _allowedTag = "Floor";
+
     private void Start()
     {
         _rayInteractorTeleport = GetComponent<XRRayInteractor>();
-        _audioSource = GetComponent<AudioSource>();
         _promptUI = _promptText.GetComponentInParent<Canvas>();
     }
 
@@ -43,9 +42,17 @@ public class RayToggler : MonoBehaviour
         {
             _rayInteractorTeleport.enabled = true;
             _rayInteractor.enabled = false;
-            _readyToTeleport = true;
-            _promptText.text = "Release: Teleport";
-            _promptUI.enabled = true;
+
+            if (_rayInteractorTeleport.TryGetCurrent3DRaycastHit(out _raycastHit) && _raycastHit.transform.CompareTag(_allowedTag))
+            {
+                _readyToTeleport = true;
+                _promptText.text = "Release: Teleport";
+                _promptUI.enabled = true;
+            }
+            else
+            {
+                _promptUI.enabled = false;
+            }
         }
         else
         {
@@ -64,11 +71,11 @@ public class RayToggler : MonoBehaviour
             return;
         }
 
-        if (_rayInteractorTeleport.TryGetCurrent3DRaycastHit(out _raycastHit) && _raycastHit.transform.CompareTag("Floor"))
+        if (_rayInteractorTeleport.TryGetCurrent3DRaycastHit(out _raycastHit) && _raycastHit.transform.CompareTag(_allowedTag))
         {
             teleportationProvider.transform.position = _raycastHit.point;
             _rayInteractorTeleport.SendHapticImpulse(hapticAmplitude, hapticDuration);
-            _audioSource.Play();
+            AudioManager.Instance.PlaySoundEffect(4);
         }
 
         _promptUI.enabled = false;
