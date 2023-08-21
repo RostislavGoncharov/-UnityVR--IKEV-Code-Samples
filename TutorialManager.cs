@@ -40,6 +40,12 @@ public class TutorialManager : MonoBehaviour
     private void Start()
     {
         RayToggler.OnTeleport += HandleTeleportToTV;
+        videoPlayer.loopPointReached += HandleVideoEnd;
+    }
+
+    private void OnDisable()
+    {
+        videoPlayer.loopPointReached -= HandleVideoEnd;
     }
 
     public void BeginTutorial()
@@ -57,30 +63,20 @@ public class TutorialManager : MonoBehaviour
         videoPlayer.Stop();
         videoPlayer.clip = videos[videoIndex];
 
-        if (videoIndex == 0)
-        {
-            videoPlayer.loopPointReached += HandleFirstVideoEnd;
-        }
-
-        else
-        {
-            videoPlayer.loopPointReached -= HandleFirstVideoEnd;
-        }
-
         videoPlayer.Play();
     }
 
-    void HandleFirstVideoEnd(VideoPlayer vp)
+    void HandleVideoEnd(VideoPlayer vp)
     {
-        GameManager.Instance.ToggleControllers(true);
+        if (vp.clip == videos[0])
+        {
+            GameManager.Instance.ToggleControllers(true);
+            AudioManager.Instance.ToggleEnvironmentSounds(true);
+            teleportationAreaTV.SetActive(true);
+            GameManager.Instance.SetTeleportationTag(_teleportationAreaTVTag);
+        }
+
         GameManager.Instance.MakeControllersVibrate(0.5f, 1.5f);
-
-        AudioManager.Instance.ToggleEnvironmentSounds(true);
-
-        teleportationAreaTV.SetActive(true);
-        GameManager.Instance.SetTeleportationTag(_teleportationAreaTVTag);
-
-
     }
 
     void HandleTeleportToTV(string tag)
