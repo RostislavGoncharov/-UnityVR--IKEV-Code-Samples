@@ -77,6 +77,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SetTeleportationTag(string tag)
+    {
+        RayToggler[] rays = controllers.GetComponentsInChildren<RayToggler>();
+
+        foreach (RayToggler ray in rays)
+        {
+            ray.SetAllowedTag(tag);
+        }
+    }
+
     public void QuitGame()
     {
         Application.Quit();
@@ -242,5 +252,10 @@ public class GameManager : MonoBehaviour
     public void SelectTVImage(int index)
     {
         tv.SelectImage(index);
+    }
+
+    public GameObject GetControllers()
+    {
+        return controllers;
     }
 }

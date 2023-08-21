@@ -17,6 +17,9 @@ public class RayToggler : MonoBehaviour
     public float hapticAmplitude = 0.2f;
     public float hapticDuration = 0.2f;
 
+    public delegate void Teleport(string tag);
+    public static event Teleport OnTeleport;
+    
     [SerializeField] XRRayInteractor _rayInteractor;
     [SerializeField] TextMeshProUGUI _promptText;
 
@@ -25,7 +28,6 @@ public class RayToggler : MonoBehaviour
     RaycastHit _raycastHit;
     bool _readyToTeleport;
     Canvas _promptUI;
-
     string _allowedTag = "Floor";
 
     private void Start()
@@ -73,11 +75,18 @@ public class RayToggler : MonoBehaviour
 
         if (_rayInteractorTeleport.TryGetCurrent3DRaycastHit(out _raycastHit) && _raycastHit.transform.CompareTag(_allowedTag))
         {
+            OnTeleport?.Invoke(_raycastHit.transform.tag);
+
             teleportationProvider.transform.position = _raycastHit.point;
             _rayInteractorTeleport.SendHapticImpulse(hapticAmplitude, hapticDuration);
             AudioManager.Instance.PlaySoundEffect(4);
         }
 
         _promptUI.enabled = false;
+    }
+
+    public void SetAllowedTag(string tag)
+    {
+        _allowedTag = tag;
     }
 }
