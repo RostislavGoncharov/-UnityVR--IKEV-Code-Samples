@@ -3,6 +3,8 @@
  * If the ray is pointing at the floor at the moment it's turned off,
  * the player gets teleported to the raycast hit point.
  * The sound of footsteps is played when teleportation happens.
+ * 
+ * This class also has methods for showing the UI prompt over the controller.
  */
 
 using UnityEngine;
@@ -20,7 +22,7 @@ public class RayToggler : MonoBehaviour
     public delegate void Teleport(string tag);
     public static event Teleport OnTeleport;
     
-    [SerializeField] XRRayInteractor _rayInteractor;
+    [SerializeField] XRRayInteractor _rayInteractor; 
     [SerializeField] TextMeshProUGUI _promptText;
 
     XRRayInteractor _rayInteractorTeleport;
@@ -48,12 +50,11 @@ public class RayToggler : MonoBehaviour
             if (_rayInteractorTeleport.TryGetCurrent3DRaycastHit(out _raycastHit) && _raycastHit.transform.CompareTag(_allowedTag))
             {
                 _readyToTeleport = true;
-                _promptText.text = "Release: Teleport";
-                _promptUI.enabled = true;
+                ShowUIPrompt(true, "Release: Teleport");
             }
             else
             {
-                _promptUI.enabled = false;
+                ShowUIPrompt(false);
             }
         }
         else
@@ -88,5 +89,11 @@ public class RayToggler : MonoBehaviour
     public void SetAllowedTag(string tag)
     {
         _allowedTag = tag;
+    }
+
+    void ShowUIPrompt(bool isVisible, string text = "")
+    {
+        _promptUI.enabled = isVisible;
+        _promptText.text = text;
     }
 }

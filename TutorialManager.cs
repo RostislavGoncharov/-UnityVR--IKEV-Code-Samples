@@ -2,9 +2,10 @@
  * This class manages the tutorial sequence at the start of the game.
  * The sequence is as follows:
  * 1. The player watches the Come_closer video;
- * 2. As soon as the video finishes, controllers are activated and background sounds appear;
+ * 2. As soon as the video finishes, controllers are activated;
  * 3. The teleportation area in front of the TV is highlighted;
  * 4. Once the player has teleported closer to the TV, the Turn_speaker_on video starts;
+ * 5. As soon as the video finishes, background sounds appear.
  */
 
 
@@ -18,10 +19,13 @@ public class TutorialManager : MonoBehaviour
 
     [SerializeField] GameObject teleportationAreaTV;
     [SerializeField] VideoPlayer videoPlayer;
+    [SerializeField] Speaker speaker;
     [SerializeField] List<VideoClip> videos = new List<VideoClip>();
 
     string _teleportationAreaFloorTag = "Floor";
     string _teleportationAreaTVTag = "TVArea";
+
+    int _speakerSoundIndex = 0;
 
     private void Awake()
     {
@@ -35,6 +39,7 @@ public class TutorialManager : MonoBehaviour
         }
 
         teleportationAreaTV.SetActive(false);
+        speaker.enabled = false;
     }
 
     private void Start()
@@ -71,9 +76,14 @@ public class TutorialManager : MonoBehaviour
         if (vp.clip == videos[0])
         {
             GameManager.Instance.ToggleControllers(true);
-            AudioManager.Instance.ToggleEnvironmentSounds(true);
             teleportationAreaTV.SetActive(true);
             GameManager.Instance.SetTeleportationTag(_teleportationAreaTVTag);
+        }
+
+        if (vp.clip == videos[1])
+        {
+            AudioManager.Instance.ToggleEnvironmentSounds(true);
+            speaker.enabled = true;
         }
 
         GameManager.Instance.MakeControllersVibrate(0.5f, 1.5f);

@@ -11,6 +11,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] List<AudioClip> soundEffects = new List<AudioClip>();
     [SerializeField] List<AudioSource> environmentSounds = new List<AudioSource>();
 
+    public List<AudioClip> speakerTracks = new List<AudioClip>();
+
     AudioSource audioSource;
 
     private void Awake()
