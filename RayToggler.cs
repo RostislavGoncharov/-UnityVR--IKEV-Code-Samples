@@ -12,7 +12,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 using TMPro;
 
-public class RayToggler : MonoBehaviour
+public class RayToggler : MonoBehaviour, IRay
 {
     public InputActionProperty teleportAction;
     public TeleportationProvider teleportationProvider;
@@ -22,7 +22,7 @@ public class RayToggler : MonoBehaviour
     public delegate void Teleport(string tag);
     public static event Teleport OnTeleport;
     
-    [SerializeField] XRRayInteractor _rayInteractor; 
+    [SerializeField] XRRayInteractor _rayInteractorPrimary; 
     [SerializeField] TextMeshProUGUI _promptText;
 
     XRRayInteractor _rayInteractorTeleport;
@@ -45,7 +45,7 @@ public class RayToggler : MonoBehaviour
         if (teleportValue.y > 0)
         {
             _rayInteractorTeleport.enabled = true;
-            _rayInteractor.enabled = false;
+            _rayInteractorPrimary.enabled = false;
 
             if (_rayInteractorTeleport.TryGetCurrent3DRaycastHit(out _raycastHit) && _raycastHit.transform.CompareTag(_allowedTag))
             {
@@ -62,7 +62,7 @@ public class RayToggler : MonoBehaviour
             TryTeleport();
 
             _rayInteractorTeleport.enabled = false;
-            _rayInteractor.enabled = true;
+            _rayInteractorPrimary.enabled = true;
             _readyToTeleport = false;
         }
     }
@@ -91,7 +91,7 @@ public class RayToggler : MonoBehaviour
         _allowedTag = tag;
     }
 
-    void ShowUIPrompt(bool isVisible, string text = "")
+    public void ShowUIPrompt(bool isVisible, string text = "")
     {
         _promptUI.enabled = isVisible;
         _promptText.text = text;

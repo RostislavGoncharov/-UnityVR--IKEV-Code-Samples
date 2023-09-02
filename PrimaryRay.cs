@@ -1,18 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit;
 
-public class PrimaryRay : MonoBehaviour
+public class PrimaryRay : XRRayInteractor, IRay
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] TextMeshProUGUI _promptText;
+    [SerializeField] InputActionReference _interactActionReference;
+
+    Canvas _promptUI;
+
+    protected override void Start()
     {
-        
+        base.Start();
+        _promptUI = _promptText.GetComponentInParent<Canvas>();
+    }
+    public void ShowUIPrompt(bool isVisible, string text = "")
+    {
+        _promptUI.enabled = isVisible;
+        _promptText.text = text;
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void OnHoverEntered(HoverEnterEventArgs args)
     {
-        
+        base.OnHoverEntered(args);
+
+        IInteractable interactable = args.interactableObject.transform.GetComponent<IInteractable>();
+
+        if (interactable != null)
+        {
+            _interactActionReference.action.started += interactable.OnInteract;
+        }
+    }
+
+    protected override void OnHoverExited(HoverExitEventArgs args)
+    {
+        base.OnHoverExited(args);
+
+        IInteractable interactable = args.interactableObject.transform.GetComponent<IInteractable>();
+
+        if (interactable != null)
+        {
+            _interactActionReference.action.started -= interactable.OnInteract;
+        }
     }
 }
