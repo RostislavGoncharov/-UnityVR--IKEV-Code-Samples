@@ -31,6 +31,7 @@ public class PrimaryRay : XRRayInteractor, IRay
         {
             _interactActionReference.action.started += interactable.OnInteract;
             ShowUIPrompt(true, interactable.UIprompt);
+
             interactable.OnHover();
         }
     }
@@ -45,6 +46,8 @@ public class PrimaryRay : XRRayInteractor, IRay
         {
             _interactActionReference.action.started -= interactable.OnInteract;
             ShowUIPrompt(false);
+
+            interactable.OnHoverFinished();
         }
     }
 
@@ -57,6 +60,18 @@ public class PrimaryRay : XRRayInteractor, IRay
         if (interactable != null)
         {
             interactable.OnInteract(new InputAction.CallbackContext());
+        }
+    }
+
+    protected override void OnSelectExited(SelectExitEventArgs args)
+    {
+        base.OnSelectExited(args);
+
+        IInteractable interactable = args.interactableObject.transform.GetComponent<IInteractable>();
+
+        if (interactable != null)
+        {
+            interactable.OnInteractionFinished();
         }
     }
 }
