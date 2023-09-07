@@ -81,13 +81,15 @@ public class Speaker : XRSimpleInteractable, IInteractable
         if (audioSource.isPlaying)
         {
             AudioManager.Instance.PlaySoundEffect(7);
-            audioSource.Pause();
+            audioSource.Stop();
         }
         else
         {
             AudioManager.Instance.PlaySoundEffect(7);
             audioSource.Play();
         }
+
+        AudioManager.Instance.ToggleEnvironmentSounds(true);
     }
 
     void IInteractable.OnInteractionFinished()

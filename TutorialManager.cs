@@ -19,13 +19,13 @@ public class TutorialManager : MonoBehaviour
 
     [SerializeField] GameObject teleportationAreaTV;
     [SerializeField] VideoPlayer videoPlayer;
+    [SerializeField] TV tv;
     [SerializeField] Speaker speaker;
+    [SerializeField] Book book;
     [SerializeField] List<VideoClip> videos = new List<VideoClip>();
 
     string _teleportationAreaFloorTag = "Floor";
     string _teleportationAreaTVTag = "TVArea";
-
-    int _speakerSoundIndex = 0;
 
     private void Awake()
     {
@@ -65,10 +65,16 @@ public class TutorialManager : MonoBehaviour
 
     public void PlayVideo(int videoIndex)
     {
+        ToggleVideoPlayer(true);
         videoPlayer.Stop();
         videoPlayer.clip = videos[videoIndex];
 
         videoPlayer.Play();
+    }
+
+    void ToggleVideoPlayer(bool value)
+    {
+        videoPlayer.transform.parent.gameObject.SetActive(value);
     }
 
     void HandleVideoEnd(VideoPlayer vp)
@@ -78,12 +84,15 @@ public class TutorialManager : MonoBehaviour
             GameManager.Instance.ToggleControllers(true);
             teleportationAreaTV.SetActive(true);
             GameManager.Instance.SetTeleportationTag(_teleportationAreaTVTag);
+            ToggleVideoPlayer(false);
+            tv.SelectImage(4);
         }
 
         if (vp.clip == videos[1])
         {
-            AudioManager.Instance.ToggleEnvironmentSounds(true);
             speaker.enabled = true;
+            speaker.SelectClip(0);
+            book.Blink();
         }
 
         GameManager.Instance.MakeControllersVibrate(0.5f, 1.5f);
