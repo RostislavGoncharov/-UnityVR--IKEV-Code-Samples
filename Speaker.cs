@@ -15,10 +15,8 @@ public class Speaker : XRSimpleInteractable, IInteractable
 
     public string UIprompt { get; set; }
 
-    public Speaker()
-    {
-        UIprompt = "A: Toggle On / Off";
-    }
+    string _turnOnPrompt = "A: Turn Speaker On";
+    string _turnOffPrompt = "A: Turn Speaker Off";
 
     protected override void Awake()
     {
@@ -35,12 +33,14 @@ public class Speaker : XRSimpleInteractable, IInteractable
     {
         base.OnHoverEntered(args);
 
-        //IRay ray = args.interactorObject.transform.gameObject.GetComponent<IRay>();
-
-        //if (ray != null)
-        //{
-        //    ray.ShowUIPrompt(true, );
-        //}
+        if (audioSource.isPlaying)
+        {
+            UIprompt = _turnOffPrompt;
+        }
+        else
+        {
+            UIprompt = _turnOnPrompt;
+        }
 
         SetCanBeToggled(true);
     }
@@ -48,13 +48,6 @@ public class Speaker : XRSimpleInteractable, IInteractable
     protected override void OnHoverExited(HoverExitEventArgs args)
     {
         base.OnHoverExited(args);
-
-        //IRay ray = args.interactorObject.transform.gameObject.GetComponent<IRay>();
-
-        //if (ray != null)
-        //{
-        //    ray.ShowUIPrompt(false);
-        //}
 
         SetCanBeToggled(false);
     }
@@ -82,11 +75,13 @@ public class Speaker : XRSimpleInteractable, IInteractable
         {
             AudioManager.Instance.PlaySoundEffect(7);
             audioSource.Stop();
+            UIprompt = _turnOnPrompt;
         }
         else
         {
             AudioManager.Instance.PlaySoundEffect(7);
             audioSource.Play();
+            UIprompt = _turnOffPrompt;
         }
 
         AudioManager.Instance.ToggleEnvironmentSounds(true);
