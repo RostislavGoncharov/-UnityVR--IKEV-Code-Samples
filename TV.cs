@@ -5,8 +5,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.Video;
 
 /* This class handles the images and sounds coming from the TV object.
- * It also makes the TV an XRBaseInteractable, so that the player can call up the main menu
- * by interacting with the TV in the scene.
+ * It also inherits from XRBaseInteractable, so that the player can call up the main menu
+ * by interacting with the TV in the scene. This behavior will be refined in the new demo.
  */
 
 public class TV : XRBaseInteractable

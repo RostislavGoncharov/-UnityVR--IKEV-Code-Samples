@@ -7,8 +7,10 @@ using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
 /*
- * This class is a singleton which handles all key game interactions,
- * specifically when it comes to tracking tasks and counting attachments.
+ * This class is a singleton which handles all key game interactions 
+ * and facilitates story progression.
+ *
+ * TODO: Separate the TaskTracker functionality into its own class.
  */
 
 public class GameManager : MonoBehaviour

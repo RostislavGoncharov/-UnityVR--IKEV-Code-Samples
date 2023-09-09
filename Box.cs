@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 /*
  * This class handles all functionality of a box with furniture parts:
- * opening the box, spawning the parts, destroying the box afterwards
+ * opening the box, spawning the parts, destroying the box afterwards.
  */
 public class Box : MonoBehaviour
 {

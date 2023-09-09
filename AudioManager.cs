@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// This class is responsible for playing all 2D one-shot sound effects
+/* 
+* This class is responsible for playing all 2D one-shot sound effects.
+* It also can toggle environment sounds on and off (this is required by the story). 
+*/
 
 [RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
