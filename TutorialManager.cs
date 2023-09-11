@@ -41,6 +41,7 @@ public class TutorialManager : MonoBehaviour
 
         teleportationAreaTV.SetActive(false);
         speaker.enabled = false;
+        Speaker.onHandleClipEnd += HandleClipEnd;
     }
 
     private void Start()
@@ -52,6 +53,7 @@ public class TutorialManager : MonoBehaviour
     private void OnDisable()
     {
         videoPlayer.loopPointReached -= HandleVideoEnd;
+        Speaker.onHandleClipEnd -= HandleClipEnd;
     }
 
     public void BeginTutorial()
@@ -93,10 +95,27 @@ public class TutorialManager : MonoBehaviour
         {
             speaker.enabled = true;
             speaker.SelectClip(0);
-            book.Blink();
         }
 
         GameManager.Instance.MakeControllersVibrate(0.5f, 1.5f);
+    }
+
+    void HandleClipEnd(int clipIndex)
+    {
+        switch (clipIndex)
+        {
+            case 0:
+                speaker.PlayClip(1);
+                break;
+
+            case 1:
+                tv.ToggleUI(true);
+                book.Blink(true);
+                break;
+
+            default:
+                break;
+        }
     }
 
     void HandleTeleportToTV(string tag)
