@@ -2,6 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/*
+* This class implements the behaviour of the book used in Task 2 in the game.
+* The book uses a blinking material to draw the player's attention.
+*/
 public class Book : MonoBehaviour, IInteractable
 {
     public string UIprompt { get; set; }

@@ -1,6 +1,6 @@
 using UnityEngine.XR.Interaction.Toolkit;
 
-// This class handles the interactions between the box and the carpet
+// This class handles the interactions between the box and the carpet.
 
 public class CarpetSocketInteractor : XRSocketInteractor
 {

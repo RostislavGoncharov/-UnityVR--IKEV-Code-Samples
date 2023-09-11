@@ -3,6 +3,13 @@ using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/*
+ * This class defines the behavior of the ray used for any player interactions
+ * (except for teleporting).
+ * It updates the UI prompt which appears over the controller when an interaction is possible.
+ * It also triggers any behaviour the interactable object might have. 
+ */
+
 public class PrimaryRay : XRRayInteractor, IRay
 {
     [SerializeField] TextMeshProUGUI _promptText;

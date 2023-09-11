@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /* This class handles the functionality of a disassemblable object:
- * it spawns the parts from the list, then destroys the object itself
+ * it spawns the parts from the list, then destroys the object itself.
  */
 
 public class DisassemblableObject : MonoBehaviour

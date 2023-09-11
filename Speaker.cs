@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
-/* This class handles the functionality of a speaker object.
+/* This class handles the functionality of the speaker object.
  */
 
 [RequireComponent(typeof(AudioSource))]

@@ -1,11 +1,12 @@
 /*
  * This class manages the tutorial sequence at the start of the game.
- * The sequence is as follows:
+ * The sequence is currently as follows:
  * 1. The player watches the Come_closer video;
  * 2. As soon as the video finishes, controllers are activated;
  * 3. The teleportation area in front of the TV is highlighted;
  * 4. Once the player has teleported closer to the TV, the Turn_speaker_on video starts;
- * 5. As soon as the video finishes, background sounds appear.
+ * 5. As soon as the speaker is turned on, background sounds appear and the first voice clip plays;
+ * 6. As soon as the first clip is finished, the book starts blinking and the second clip starts playing.
  */
 
 
