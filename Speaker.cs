@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -15,13 +16,19 @@ public class Speaker : XRSimpleInteractable, IInteractable
 
     public string UIprompt { get; set; }
 
+    public delegate void HandleClipEnd();
+    public static HandleClipEnd onHandleClipEnd;
+
     string _turnOnPrompt = "A: Turn Speaker On";
     string _turnOffPrompt = "A: Turn Speaker Off";
+
+    IEnumerator _waitCoroutine;
 
     protected override void Awake()
     {
         base.Awake();
         audioSource = GetComponent<AudioSource>();
+        _waitCoroutine = WaitForEndOfClip();
     }
 
     public void SetCanBeToggled (bool value)
@@ -29,34 +36,11 @@ public class Speaker : XRSimpleInteractable, IInteractable
         _canBeToggled = value;
     }
 
-    protected override void OnHoverEntered(HoverEnterEventArgs args)
-    {
-        base.OnHoverEntered(args);
-
-        if (audioSource.isPlaying)
-        {
-            UIprompt = _turnOffPrompt;
-        }
-        else
-        {
-            UIprompt = _turnOnPrompt;
-        }
-
-        SetCanBeToggled(true);
-    }
-
-    protected override void OnHoverExited(HoverExitEventArgs args)
-    {
-        base.OnHoverExited(args);
-
-        SetCanBeToggled(false);
-    }
-
     public void PlayClip(int index)
     {
         SelectClip(index);
-        AudioManager.Instance.PlaySoundEffect(7);
         audioSource.Play();
+        StartCoroutine(_waitCoroutine);
     }
 
     public void SelectClip(int index)
@@ -75,12 +59,14 @@ public class Speaker : XRSimpleInteractable, IInteractable
         {
             AudioManager.Instance.PlaySoundEffect(7);
             audioSource.Stop();
+            StopCoroutine(_waitCoroutine);
             UIprompt = _turnOnPrompt;
         }
         else
         {
             AudioManager.Instance.PlaySoundEffect(7);
             audioSource.Play();
+            StartCoroutine(_waitCoroutine);
             UIprompt = _turnOffPrompt;
         }
 
@@ -94,11 +80,29 @@ public class Speaker : XRSimpleInteractable, IInteractable
 
     void IInteractable.OnHover()
     {
-        return;
+        if (audioSource.isPlaying)
+        {
+            UIprompt = _turnOffPrompt;
+        }
+        else
+        {
+            UIprompt = _turnOnPrompt;
+        }
+
+        SetCanBeToggled(true);
     }
 
     void IInteractable.OnHoverFinished()
     {
-        return;
+        SetCanBeToggled(false);
+    }
+
+    IEnumerator WaitForEndOfClip()
+    {
+        float _clipLength = audioSource.clip.length;
+        float _timeOffset = 0.5f;
+
+        yield return new WaitForSeconds(_clipLength + _timeOffset);
+        onHandleClipEnd?.Invoke();
     }
 }
