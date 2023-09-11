@@ -16,19 +16,19 @@ public class Speaker : XRSimpleInteractable, IInteractable
 
     public string UIprompt { get; set; }
 
-    public delegate void HandleClipEnd();
+    public delegate void HandleClipEnd(int clipIndex);
     public static HandleClipEnd onHandleClipEnd;
 
     string _turnOnPrompt = "A: Turn Speaker On";
     string _turnOffPrompt = "A: Turn Speaker Off";
 
-    IEnumerator _waitCoroutine;
+    int _clipIndex = 0;
 
     protected override void Awake()
     {
         base.Awake();
         audioSource = GetComponent<AudioSource>();
-        _waitCoroutine = WaitForEndOfClip();
+        UIprompt = _turnOnPrompt;
     }
 
     public void SetCanBeToggled (bool value)
@@ -40,12 +40,13 @@ public class Speaker : XRSimpleInteractable, IInteractable
     {
         SelectClip(index);
         audioSource.Play();
-        StartCoroutine(_waitCoroutine);
+        StartCoroutine(WaitForEndOfClip());
     }
 
     public void SelectClip(int index)
     {
         audioSource.clip = AudioManager.Instance.speakerTracks[index];
+        _clipIndex = index;
     }
 
     public void OnInteract(InputAction.CallbackContext context)
@@ -59,14 +60,14 @@ public class Speaker : XRSimpleInteractable, IInteractable
         {
             AudioManager.Instance.PlaySoundEffect(7);
             audioSource.Stop();
-            StopCoroutine(_waitCoroutine);
+            StopCoroutine(WaitForEndOfClip());
             UIprompt = _turnOnPrompt;
         }
         else
         {
             AudioManager.Instance.PlaySoundEffect(7);
             audioSource.Play();
-            StartCoroutine(_waitCoroutine);
+            StartCoroutine(WaitForEndOfClip());
             UIprompt = _turnOffPrompt;
         }
 
@@ -99,10 +100,12 @@ public class Speaker : XRSimpleInteractable, IInteractable
 
     IEnumerator WaitForEndOfClip()
     {
+        Debug.Log("Starting coroutine, clipIndex = " + _clipIndex);
         float _clipLength = audioSource.clip.length;
         float _timeOffset = 0.5f;
 
         yield return new WaitForSeconds(_clipLength + _timeOffset);
-        onHandleClipEnd?.Invoke();
+        onHandleClipEnd?.Invoke(_clipIndex);
+        Debug.Log("Stopping coroutine, clipIndex = " + _clipIndex);
     }
 }
