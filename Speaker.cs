@@ -60,7 +60,7 @@ public class Speaker : XRSimpleInteractable, IInteractable
         {
             AudioManager.Instance.PlaySoundEffect(7);
             audioSource.Stop();
-            StopCoroutine(WaitForEndOfClip());
+            StopAllCoroutines();
             UIprompt = _turnOnPrompt;
         }
         else
