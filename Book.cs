@@ -30,19 +30,26 @@ public class Book : MonoBehaviour, IInteractable
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        // Remove the blinking material if it's present    
-        _meshRenderer.GetMaterials(_materials);
-
-        if (_materials.Count > 1)
-        {
-            _meshRenderer.materials = new Material[] { _materials[0] };
-        }
+        Blink(false);
     }
 
-    public void Blink()
+    public void Blink(bool shouldBlink)
     {
-        _meshRenderer.GetMaterials(_materials);
-        _meshRenderer.materials = new Material[] { _materials[0], blinkMaterial };
+        if (shouldBlink)
+        {
+            _meshRenderer.GetMaterials(_materials);
+            _meshRenderer.materials = new Material[] { _materials[0], blinkMaterial };
+        }
+        else
+        {
+            // Remove the blinking material if it's present    
+            _meshRenderer.GetMaterials(_materials);
+
+            if (_materials.Count > 1)
+            {
+                _meshRenderer.materials = new Material[] { _materials[0] };
+            }
+        }
     }
 
     void IInteractable.OnInteractionFinished()
@@ -52,7 +59,7 @@ public class Book : MonoBehaviour, IInteractable
 
     void IInteractable.OnHover()
     {
-        Blink();
+        return;
     }
 
     void IInteractable.OnHoverFinished()
