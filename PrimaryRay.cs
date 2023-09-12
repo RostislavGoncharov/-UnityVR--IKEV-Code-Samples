@@ -58,27 +58,27 @@ public class PrimaryRay : XRRayInteractor, IRay
         }
     }
 
-    protected override void OnSelectEntered(SelectEnterEventArgs args)
-    {
-        base.OnSelectEntered(args);
+//    protected override void OnSelectEntered(SelectEnterEventArgs args)
+//    {
+//        base.OnSelectEntered(args);
 
-        IInteractable interactable = args.interactableObject.transform.GetComponent<IInteractable>();
+//        IInteractable interactable = args.interactableObject.transform.GetComponent<IInteractable>();
 
-        if (interactable != null)
-        {
-            interactable.OnInteract(new InputAction.CallbackContext());
-        }
-    }
+//        if (interactable != null)
+//        {
+//            interactable.OnInteract(new InputAction.CallbackContext());
+//        }
+//    }
 
-    protected override void OnSelectExited(SelectExitEventArgs args)
-    {
-        base.OnSelectExited(args);
+//    protected override void OnSelectExited(SelectExitEventArgs args)
+//    {
+//        base.OnSelectExited(args);
 
-        IInteractable interactable = args.interactableObject.transform.GetComponent<IInteractable>();
+//        IInteractable interactable = args.interactableObject.transform.GetComponent<IInteractable>();
 
-        if (interactable != null)
-        {
-            interactable.OnInteractionFinished();
-        }
-    }
+//        if (interactable != null)
+//        {
+//            interactable.OnInteractionFinished();
+//        }
+//    }
 }
