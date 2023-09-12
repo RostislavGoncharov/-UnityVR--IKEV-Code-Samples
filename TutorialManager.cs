@@ -106,10 +106,10 @@ public class TutorialManager : MonoBehaviour
         {
             case 0:
                 speaker.PlayClip(1);
+                tv.ToggleUI(true);
                 break;
 
             case 1:
-                tv.ToggleUI(true);
                 book.Blink(true);
                 break;
 
