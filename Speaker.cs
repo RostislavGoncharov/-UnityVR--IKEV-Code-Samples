@@ -7,7 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit;
  */
 
 [RequireComponent(typeof(AudioSource))]
-public class Speaker : XRSimpleInteractable, IInteractable
+public class Speaker : XRBaseInteractable, IInteractable
 {
     AudioSource audioSource;
     bool _canBeToggled = false;
@@ -17,14 +17,15 @@ public class Speaker : XRSimpleInteractable, IInteractable
     public delegate void HandleClipEnd(int clipIndex);
     public static HandleClipEnd onHandleClipEnd;
 
-    string _turnOnPrompt = "A: Turn Speaker On";
-    string _turnOffPrompt = "A: Turn Speaker Off";
+    string _turnOnPrompt = "Trigger: Turn Speaker On";
+    string _turnOffPrompt = "Trigger: Turn Speaker Off";
 
     int _clipIndex = 0;
 
-    protected override void Awake()
+     protected override void Awake()
     {
         base.Awake();
+
         audioSource = GetComponent<AudioSource>();
         UIprompt = _turnOnPrompt;
     }
@@ -98,12 +99,10 @@ public class Speaker : XRSimpleInteractable, IInteractable
 
     IEnumerator WaitForEndOfClip()
     {
-        Debug.Log("Starting coroutine, clipIndex = " + _clipIndex);
         float _clipLength = audioSource.clip.length;
         float _timeOffset = 0.5f;
 
         yield return new WaitForSeconds(_clipLength + _timeOffset);
         onHandleClipEnd?.Invoke(_clipIndex);
-        Debug.Log("Stopping coroutine, clipIndex = " + _clipIndex);
     }
 }
