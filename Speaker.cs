@@ -9,8 +9,6 @@ using UnityEngine.XR.Interaction.Toolkit;
 [RequireComponent(typeof(AudioSource))]
 public class Speaker : XRSimpleInteractable, IInteractable
 {
-    [SerializeField] InputActionReference toggleSpeakerReference;
-
     AudioSource audioSource;
     bool _canBeToggled = false;
 
