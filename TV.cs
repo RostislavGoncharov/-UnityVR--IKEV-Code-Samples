@@ -12,9 +12,8 @@ using UnityEngine.Video;
 public class TV : XRBaseInteractable
 {
     [SerializeField] List<Sprite> images = new List<Sprite>();
-    //[SerializeField] List<VideoClip> videos = new List<VideoClip>();
     [SerializeField] Image screen;
-    //[SerializeField] VideoPlayer videoPlayer;
+    [SerializeField] Image uiPanel;
 
     public void SelectImage(int imageIndex)
     {
@@ -38,28 +37,9 @@ public class TV : XRBaseInteractable
         }
     }
 
-    //public void playvideo(int videoindex)
-    //{
-    //    videoplayer.stop();
-    //    videoplayer.clip = videos[videoindex];
-
-    //    if (videoindex == 0)
-    //    {
-    //        videoplayer.looppointreached += handlefirstvideoend;
-    //    }
-
-    //    else
-    //    {
-    //        videoplayer.looppointreached -= handlefirstvideoend;
-    //    }
-
-    //    videoplayer.play();
-    //}
-
-    //void handlefirstvideoend(videoplayer vp)
-    //{
-    //    gamemanager.instance.togglecontrollers(true);
-    //    gamemanager.instance.makecontrollersvibrate(0.5f, 1.5f);
-    //}
+    public void ToggleUI(bool value)
+    {
+        uiPanel.transform.gameObject.SetActive(value);
+    }
 
 }
