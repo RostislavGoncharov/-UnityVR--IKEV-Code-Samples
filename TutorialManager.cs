@@ -42,6 +42,7 @@ public class TutorialManager : MonoBehaviour
         teleportationAreaTV.SetActive(false);
         speaker.enabled = false;
         Speaker.onHandleClipEnd += HandleClipEnd;
+        book.enabled = false;
     }
 
     private void Start()
@@ -110,6 +111,7 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 1:
+                book.enabled = true;
                 book.Blink(true);
                 break;
 
