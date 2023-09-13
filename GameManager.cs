@@ -9,16 +9,12 @@ using UnityEngine.XR.Interaction.Toolkit;
 /*
  * This class is a singleton which handles all key game interactions 
  * and facilitates story progression.
- *
- * TODO: Separate the TaskTracker functionality into its own class.
  */
 
 public class GameManager : MonoBehaviour
 
 {
     public static GameManager Instance { get; private set; }
-
-    List<TaskTracker> taskTrackerList = new List<TaskTracker>();
 
     [SerializeField] List<TaskText> taskTextList = new List<TaskText>();
     [SerializeField] List<Box> boxList = new List<Box>();
@@ -28,10 +24,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] Image endMessage;
     [SerializeField] int tasksTotal;
 
+    public bool isTestEnv = false;
+
     // TEMPORARY
     [SerializeField] InputActionReference quitAction;
 
-    int tasksCompleted = 0;
+    TaskManager _taskManager;
 
     bool boxPickedUp = false;
 
@@ -46,13 +44,28 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
 
-        ToggleControllers(false);
-        AudioManager.Instance.ToggleEnvironmentSounds(false);
+        if (!isTestEnv)
+        {
+            ToggleControllers(false);
+            AudioManager.Instance.ToggleEnvironmentSounds(false);
+        }
+
+        GameObject _taskManagerObject = new GameObject("Task Manager");
+        _taskManager = _taskManagerObject.AddComponent<TaskManager>();
+        _taskManager.tasksTotal = tasksTotal;
+        _taskManager.taskTextList = taskTextList;
     }
 
     private void Start()
     {
-        TutorialManager.Instance.BeginTutorial();
+        if (!isTestEnv)
+        {
+            TutorialManager.Instance.BeginTutorial();
+        }
+        else
+        {
+            tv.ToggleUI(true);
+        }
     }
 
     private void Update()
@@ -101,121 +114,25 @@ public class GameManager : MonoBehaviour
 
     public void IncrementAttachments(int taskNumber)
     {
-        TaskTracker task = taskTrackerList.Find(x => x.taskNumber == taskNumber);
-        if (task != null)
-        {
-            task.IncrementAttachments();
-        }
+        _taskManager.IncrementAttachments(taskNumber);
     }
 
     public void DecrementAttachments(int taskNumber)
     {
-        TaskTracker task = taskTrackerList.Find(x => x.taskNumber == taskNumber);
-        if (task != null)
-        {
-            task.DecrementAttachments();
-        }
-
-    }
-
-    /* Logic to allow multiple tasks to run in parallel.
-     * A TaskTracker object handles everything related to assembly and disassembly of a particular model in the scene. 
-     * It is spawned when a RootObject is instantiated.
-     * The variable taskNumber is used as an id. Currently taskNumber should be set manually for each RootObject and each socket.
-     * taskNumber for a RootObject and all relevant sockets should be identical.
-     */
-    private class TaskTracker
-    {
-        public TaskTracker(RootObject root, int task)
-        {
-            rootObject = root;
-            taskNumber = task;
-            attachmentsNeeded = rootObject.attachmentsNeeded;
-            nextBoxIndex = rootObject.nextBoxIndex;
-            tvScreenIndex = rootObject.tvScreenIndex;
-        }
-        
-        public RootObject rootObject;
-
-        public int tvScreenIndex;
-        public int nextBoxIndex;
-        public int taskNumber;
-        public int attachmentsNeeded;
-        public int attachmentsMade = 0;
-
-        public void IncrementAttachments()
-        {
-            attachmentsMade++;
-            Debug.Log("Part attached! Attachments made: " + attachmentsMade);
-            CheckCompletion();
-        }
-
-        public void DecrementAttachments()
-        {
-            attachmentsMade--;
-            Debug.Log("Part unattached! Attachments made: " + attachmentsMade);
-        }
-
-        void CheckCompletion()
-        {
-            if (attachmentsMade == attachmentsNeeded)
-            {
-                rootObject.SpawnModel();
-                Debug.Log("Model spawned");
-                Instance.FinishTask(taskNumber);
-                Debug.Log(Instance.taskTrackerList.Count);
-            }
-        }
+        _taskManager.DecrementAttachments(taskNumber);
     }
 
     public void BeginTask(RootObject rootObject, int taskNumber)
     {
-        TaskTracker task = new TaskTracker(rootObject, taskNumber);
-
-        TaskTracker existingTask = taskTrackerList.Find(x => x.taskNumber == taskNumber);
-
-        if (existingTask != null)
-        {
-            task.attachmentsMade = existingTask.attachmentsMade;
-            taskTrackerList.Remove(existingTask);
-            Debug.Log("Task continued: " + task.taskNumber + ", attachments made: " + task.attachmentsMade);
-        }
-
-        taskTrackerList.Add(task);
-
-        Debug.Log("Task Started: " + task.taskNumber);
+        _taskManager.BeginTask(rootObject, taskNumber);
     }
 
     public void FinishTask(int taskNumber)
     {
-        TaskTracker task = taskTrackerList.Find(x => x.taskNumber == taskNumber);
-        if (task != null)
-        {
-            if (task.nextBoxIndex != -1)
-            {
-                SpawnBox(task.nextBoxIndex);
-            }
-
-            if (task.tvScreenIndex != 0)
-            {
-                SelectTVImage(task.tvScreenIndex);
-            }
-            taskTrackerList.Remove(task);
-            Debug.Log("Task " + task.taskNumber + " complete!");
-            TaskText taskText = taskTextList.Find(x => x.taskNumber == taskNumber);
-            taskText.CrossOut();
-            AudioManager.Instance.PlaySoundEffect(5);
-
-            tasksCompleted++;
-
-            if (tasksCompleted >= tasksTotal)
-            {
-                ShowEndMessage();
-            }
-        } 
+        _taskManager.FinishTask(taskNumber);
     }
 
-    void ShowEndMessage()
+    public void ShowEndMessage()
     {
         endMessage.gameObject.SetActive(true);
     }
