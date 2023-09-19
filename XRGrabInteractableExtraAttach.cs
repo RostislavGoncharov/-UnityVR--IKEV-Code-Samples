@@ -1,13 +1,19 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
 /*
  * This class extends the XRGrabInteractable functionality
  * by allowing you to assign separate transforms 
- * for grab and socket interactions.
+ * for grab and socket interactions, as well as to implement
+ * any extra functionality needed.
+ * 
+ * It implements the IInteractable interface primarily for the UIprompt property.
+ * The rest of IInteractable's functions are left empty here by default but can be used
+ * to add functionality as needed.
  */
 
-public class XRGrabInteractableExtraAttach : XRGrabInteractable
+public class XRGrabInteractableExtraAttach : XRGrabInteractable, IInteractable
 {
     public Transform grabTransform;
     public Transform socketAttachTransform;
@@ -15,6 +21,8 @@ public class XRGrabInteractableExtraAttach : XRGrabInteractable
     [SerializeField] InteractionLayerMask partLayers;
 
     public bool canBeAttached = false;
+
+    public string UIprompt { get; set; }
 
     /*
      * Separate the grab transform from the attach transform.
@@ -61,7 +69,7 @@ public class XRGrabInteractableExtraAttach : XRGrabInteractable
         {
             SetAttachTransform();
         }
-        
+
         base.OnHoverEntered(args);
     }
 
@@ -83,5 +91,25 @@ public class XRGrabInteractableExtraAttach : XRGrabInteractable
     public void SetInteractionLayerMask()
     {
         interactionLayers = partLayers;
+    }
+
+    public virtual void OnInteract(InputAction.CallbackContext context)
+    {
+
+    }
+
+    public virtual void OnInteractionFinished()
+    {
+
+    }
+
+    public virtual void OnHover()
+    {
+
+    }
+
+    public virtual void OnHoverFinished()
+    {
+
     }
 }
