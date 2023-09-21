@@ -24,13 +24,15 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] Speaker speaker;
     [SerializeField] Book book;
     [SerializeField] List<VideoClip> videos = new List<VideoClip>();
+    [SerializeField] TaskText speakerTaskText;
+    [SerializeField] GameObject taskList;
 
     string _teleportationAreaFloorTag = "Floor";
     string _teleportationAreaTVTag = "TVArea";
 
     private void Awake()
     {
-        if ((Instance != null && Instance != this) || GameManager.Instance.isTestEnv)
+        if ((Instance != null && Instance != this) /*|| GameManager.Instance.isTestEnv*/)
         {
             Destroy(this);
         }
@@ -132,5 +134,4 @@ public class TutorialManager : MonoBehaviour
             RayToggler.OnTeleport -= HandleTeleportToTV;
         }
     }
-
 }
