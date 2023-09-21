@@ -5,8 +5,10 @@ using TMPro;
 
 public class TaskText : MonoBehaviour
 {
-    TextMeshProUGUI text;
+    public TextMeshProUGUI text;
     public int taskNumber;
+
+    [SerializeField] bool _startsCrossedOut;
 
     private void Start()
     {
@@ -16,10 +18,16 @@ public class TaskText : MonoBehaviour
         {
             Debug.Log("Text component not found");
         }
+
+        if (_startsCrossedOut)
+        {
+            CrossOut();
+        }
     }
 
     public void CrossOut()
     {
+        Debug.Log("Crossed out");
         text.fontStyle = FontStyles.Strikethrough;
     }
 }
