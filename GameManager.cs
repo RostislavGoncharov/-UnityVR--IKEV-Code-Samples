@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
 /*
@@ -24,10 +23,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Image endMessage;
     [SerializeField] int tasksTotal;
 
-    public bool isTestEnv = false;
-
-    // TEMPORARY
-    [SerializeField] InputActionReference quitAction;
+    //public bool isTestEnv = false;
 
     TaskManager _taskManager;
 
@@ -44,7 +40,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
 
-        if (!isTestEnv)
+        //if (!isTestEnv)
         {
             ToggleControllers(false);
             AudioManager.Instance.ToggleEnvironmentSounds(false);
@@ -58,23 +54,16 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (!isTestEnv)
-        {
-            TutorialManager.Instance.BeginTutorial();
-        }
-        else
-        {
-            tv.ToggleUI(true);
-        }
-    }
+        //if (!isTestEnv)
+        //{
+        //    TutorialManager.Instance.BeginTutorial();
+        //}
+        //else
+        //{
+        //    tv.ToggleUI(true);
+        //}
 
-    private void Update()
-    {
-        // TEMPORARY
-        if (quitAction.action.IsPressed())
-        {
-            QuitGame();
-        }
+        TutorialManager.Instance.BeginTutorial();
     }
 
     public void ToggleControllers(bool value)
