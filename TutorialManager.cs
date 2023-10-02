@@ -114,6 +114,7 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 1:
+                taskList.SetActive(true);
                 book.enabled = true;
                 book.Blink(true);
                 break;
