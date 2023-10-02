@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
         //if (!isTestEnv)
         {
             ToggleControllers(false);
-            AudioManager.Instance.ToggleEnvironmentSounds(false);
+            AudioManager.Instance.ToggleEnvironmentSounds(true);
         }
 
         GameObject _taskManagerObject = new GameObject("Task Manager");

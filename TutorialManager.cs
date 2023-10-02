@@ -100,7 +100,7 @@ public class TutorialManager : MonoBehaviour
             speaker.SelectClip(0);
         }
 
-        GameManager.Instance.MakeControllersVibrate(0.5f, 1.5f);
+        GameManager.Instance.MakeControllersVibrate(0.5f, 1.0f);
     }
 
     void HandleClipEnd(int clipIndex)
