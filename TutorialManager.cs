@@ -9,7 +9,7 @@
  * 6. As soon as the first clip is finished, the book starts blinking and the second clip starts playing.
  */
 
-
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
@@ -61,7 +61,8 @@ public class TutorialManager : MonoBehaviour
 
     public void BeginTutorial()
     {
-        PlayVideo(0);
+        ToggleVideoPlayer(false);
+        StartCoroutine(WaitForVideoStart(5.0f));
     }
 
     public void ToggleTeleportationArea(GameObject teleportationArea, bool value)
@@ -133,5 +134,11 @@ public class TutorialManager : MonoBehaviour
 
             RayToggler.OnTeleport -= HandleTeleportToTV;
         }
+    }
+
+    IEnumerator WaitForVideoStart(float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+        PlayVideo(0);
     }
 }
