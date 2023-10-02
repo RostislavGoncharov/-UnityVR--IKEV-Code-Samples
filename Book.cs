@@ -51,7 +51,7 @@ public class Book : XRGrabInteractableExtraAttach
 
     public override void OnInteractionFinished()
     {
-        return;
+        Blink(true);
     }
 
     public override void OnHover()

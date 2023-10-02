@@ -38,6 +38,8 @@ public class XRGrabInteractableExtraAttach : XRGrabInteractable, IInteractable
         {
             AudioManager.Instance.PlaySoundEffect(2);
 
+            OnInteract(new InputAction.CallbackContext());
+
             if (GetComponent<Box>() != null)
             {
                 GameManager.Instance.SetBoxPickedUp(true);
@@ -55,6 +57,7 @@ public class XRGrabInteractableExtraAttach : XRGrabInteractable, IInteractable
         }
 
         SetAttachTransform();
+        OnInteractionFinished();
 
         base.OnSelectExited(args);
     }
