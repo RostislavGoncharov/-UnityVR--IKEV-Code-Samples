@@ -1,4 +1,4 @@
 ﻿public interface IBlinking
 {
-    void Blink(bool shouldBlink);
+    public void Blink(bool shouldBlink);
 }
