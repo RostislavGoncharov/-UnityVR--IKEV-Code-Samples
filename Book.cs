@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 * This class implements the behaviour of the book used in Task 2 in the game.
 * The book uses a blinking material to draw the player's attention.
 */
-public class Book : XRGrabInteractableExtraAttach
+public class Book : XRGrabInteractableExtraAttach, IBlinking
 {
     [SerializeField] Material blinkMaterial;
 
@@ -20,9 +20,9 @@ public class Book : XRGrabInteractableExtraAttach
         UIprompt = "Grip: Grab Book";
 
         if (!TryGetComponent<MeshRenderer>(out _meshRenderer))
-            {
-                Debug.Log("Book: No MeshRenderer found");
-            }
+        {
+            Debug.Log("Book: No MeshRenderer found");
+        }
     }
 
     public override void OnInteract(InputAction.CallbackContext context)
