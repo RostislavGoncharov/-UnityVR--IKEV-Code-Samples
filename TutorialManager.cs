@@ -26,9 +26,11 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] List<VideoClip> videos = new List<VideoClip>();
     [SerializeField] TaskText speakerTaskText;
     [SerializeField] GameObject taskList;
+    [SerializeField] Carpet carpet;
 
     string _teleportationAreaFloorTag = "Floor";
     string _teleportationAreaTVTag = "TVArea";
+
 
     private void Awake()
     {
@@ -65,9 +67,9 @@ public class TutorialManager : MonoBehaviour
         StartCoroutine(WaitForVideoStart(5.0f));
     }
 
-    public void ToggleTeleportationArea(GameObject teleportationArea, bool value)
+    public void ToggleTeleportationArea(IBlinking teleportationArea, bool value)
     {
-        teleportationArea.SetActive(value);
+        teleportationArea.Blink(value);
     }
 
     public void PlayVideo(int videoIndex)
@@ -89,7 +91,9 @@ public class TutorialManager : MonoBehaviour
         if (vp.clip == videos[0])
         {
             GameManager.Instance.ToggleControllers(true);
-            teleportationAreaTV.SetActive(true);
+            //teleportationAreaTV.SetActive(true);
+            ToggleTeleportationArea(carpet, true);
+            carpet.transform.tag = _teleportationAreaTVTag;
             GameManager.Instance.SetTeleportationTag(_teleportationAreaTVTag);
             ToggleVideoPlayer(false);
             tv.SelectImage(4);
@@ -128,7 +132,9 @@ public class TutorialManager : MonoBehaviour
     {
         if (tag == _teleportationAreaTVTag)
         {
-            teleportationAreaTV.SetActive(false);
+            //teleportationAreaTV.SetActive(false);
+            ToggleTeleportationArea(carpet, false);
+            carpet.transform.tag = _teleportationAreaFloorTag;
             GameManager.Instance.SetTeleportationTag(_teleportationAreaFloorTag);
 
             PlayVideo(1);
