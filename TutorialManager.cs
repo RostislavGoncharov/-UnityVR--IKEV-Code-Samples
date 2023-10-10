@@ -18,7 +18,6 @@ public class TutorialManager : MonoBehaviour
 {
     public static TutorialManager Instance { get; private set; }
 
-    [SerializeField] GameObject teleportationAreaTV;
     [SerializeField] VideoPlayer videoPlayer;
     [SerializeField] TV tv;
     [SerializeField] Speaker speaker;
@@ -43,7 +42,6 @@ public class TutorialManager : MonoBehaviour
             Instance = this;
         }
 
-        teleportationAreaTV.SetActive(false);
         speaker.enabled = false;
         Speaker.onHandleClipEnd += HandleClipEnd;
         book.enabled = false;
