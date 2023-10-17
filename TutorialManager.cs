@@ -30,6 +30,8 @@ public class TutorialManager : MonoBehaviour
     string _teleportationAreaFloorTag = "Floor";
     string _teleportationAreaTVTag = "TVArea";
 
+    bool _instructionsButtonHasBeenPressed = false;
+
 
     private void Awake()
     {
@@ -79,6 +81,27 @@ public class TutorialManager : MonoBehaviour
         videoPlayer.Play();
     }
 
+    public void PlaySpeakerClip(int index)
+    {
+        speaker.PlayClip(index);
+    }
+
+    public void MakeBookBlink()
+    {
+        book.Blink(true);
+    }
+
+    public void HandleInstructionsButtonPress()
+    {
+        if (!_instructionsButtonHasBeenPressed)
+        {
+            _instructionsButtonHasBeenPressed = true;
+            PlaySpeakerClip(2);
+            book.enabled = true;
+            book.Blink(true);
+        }
+    }
+
     void ToggleVideoPlayer(bool value)
     {
         videoPlayer.transform.parent.gameObject.SetActive(value);
@@ -111,14 +134,12 @@ public class TutorialManager : MonoBehaviour
         switch (clipIndex)
         {
             case 0:
-                speaker.PlayClip(1);
+                PlaySpeakerClip(1);
                 tv.ToggleUI(true);
                 break;
 
             case 1:
                 taskList.SetActive(true);
-                book.enabled = true;
-                book.Blink(true);
                 break;
 
             default:
