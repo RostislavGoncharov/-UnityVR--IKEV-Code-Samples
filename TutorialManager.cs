@@ -96,6 +96,7 @@ public class TutorialManager : MonoBehaviour
         if (!_instructionsButtonHasBeenPressed)
         {
             _instructionsButtonHasBeenPressed = true;
+            taskList.SetActive(true);
             PlaySpeakerClip(2);
             book.enabled = true;
             book.Blink(true);
@@ -136,10 +137,6 @@ public class TutorialManager : MonoBehaviour
             case 0:
                 PlaySpeakerClip(1);
                 tv.ToggleUI(true);
-                break;
-
-            case 1:
-                taskList.SetActive(true);
                 break;
 
             default:
