@@ -1,44 +1,67 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit;
+using System.Collections.Generic;
 
 /*
  * This class handles all functionality of a box with furniture parts:
  * opening the box, spawning the parts, destroying the box afterwards.
  */
-public class Box : MonoBehaviour
+public class Box : XRGrabInteractableExtraAttach
 {
     [SerializeField] InputActionReference openBoxReference = null;
-    [SerializeField] GameObject[] partsToSpawn;
-    bool isOnCarpet = false;
-    bool canBeOpened = false;
+    [SerializeField] List<GameObject> partsToSpawn;
+    bool _isOnCarpet = false;
+    bool _canBeOpened = false;
+
+    string _canGrabPrompt = "Grip: Grab Box";
+    string _canOpenPrompt = "Grip: Grab Box\nTrigger: Open Box";
 
     static bool instructionShown = false;
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
-        openBoxReference.action.started += OpenBox;
+        base.OnEnable();
+        
+        UIprompt = _canGrabPrompt;
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
-        openBoxReference.action.started -= OpenBox;
+        base.OnDisable();
     }
 
-    void OpenBox(InputAction.CallbackContext context)
+    protected override void OnHoverEntered(HoverEnterEventArgs args)
     {
-        if (canBeOpened && isOnCarpet)
+        base.OnHoverEntered(args);
+
+        SetCanBeOpened(true);
+    }
+
+    protected override void OnHoverExited(HoverExitEventArgs args)
+    {
+        base.OnHoverExited(args);
+
+        SetCanBeOpened(false);
+    }
+
+    private void Update()
+    {
+        if (_isOnCarpet)
+        {
+            UIprompt = _canOpenPrompt;
+        }
+        else
+        {
+            UIprompt = _canGrabPrompt;
+        }
+    }
+
+    void OpenBox()
+    {
+        if (_canBeOpened && _isOnCarpet)
         {
             SpawnParts();
-
-            if (!instructionShown)
-            {
-                GameManager.Instance.SelectTVImage(1);
-                instructionShown = true;
-            }
-            else
-            {
-                GameManager.Instance.SelectTVImage(2);
-            }
         }
     }
 
@@ -59,18 +82,24 @@ public class Box : MonoBehaviour
         }
     }
 
-    void DestroyBox()
-    {
-        Destroy(this.gameObject);
-    }
-
     public void SetCanBeOpened(bool value)
     {
-        canBeOpened = value;
+        _canBeOpened = value;
     }
 
     public void SetIsOnCarpet(bool value)
     {
-        isOnCarpet = value;
+        _isOnCarpet = value;
+    }
+
+    public override void OnInteract(InputAction.CallbackContext context)
+    {
+        base.OnInteract(context);
+
+        OpenBox();
+    }
+    void DestroyBox()
+    {
+        Destroy(this.gameObject);
     }
 }
