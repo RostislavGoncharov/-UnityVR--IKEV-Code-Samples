@@ -98,21 +98,21 @@ public class XRGrabInteractableExtraAttach : XRGrabInteractable, IInteractable
 
     public virtual void OnInteract(InputAction.CallbackContext context)
     {
-
+        return;
     }
 
     public virtual void OnInteractionFinished()
     {
-
+        return;
     }
 
     public virtual void OnHover()
     {
-
+        return;
     }
 
     public virtual void OnHoverFinished()
     {
-
+        return;
     }
 }
