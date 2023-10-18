@@ -4,8 +4,6 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class CarpetSocketInteractor : XRSocketInteractor
 {
-    int tvScreenIndex = 5;
-    bool instructionShown = false;
     protected override void OnHoverEntered(HoverEnterEventArgs args)
     {
         base.OnHoverEntered(args);
@@ -29,13 +27,7 @@ public class CarpetSocketInteractor : XRSocketInteractor
         base.OnSelectEntered(args);
 
         IXRSelectInteractable box = args.interactableObject;
-        box.transform.GetComponent<Box>().SetIsOnCarpet(true);
-
-        if (!instructionShown)
-        {
-            GameManager.Instance.SelectTVImage(tvScreenIndex);
-            instructionShown = true;
-        }        
+        box.transform.GetComponent<Box>().SetIsOnCarpet(true);       
     }
 
     protected override void OnSelectExited(SelectExitEventArgs args)
