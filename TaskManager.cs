@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class TaskManager : MonoBehaviour
 {
-    [SerializeField] List<Task> TaskList = new List<Task>();
+    [SerializeField] List<Task> taskList = new List<Task>();
     [SerializeField] int tasksCompleted = 0;
 
     public int tasksTotal;
@@ -23,16 +23,16 @@ public class TaskManager : MonoBehaviour
         task.attachmentsNeeded = rootObject.attachmentsNeeded;
         task.nextBoxIndex = rootObject.nextBoxIndex;
 
-        Task existingTask = TaskList.Find(x => x.taskNumber == taskNumber);
+        Task existingTask = taskList.Find(x => x.taskNumber == taskNumber);
 
         if (existingTask != null)
         {
             task.attachmentsMade = existingTask.attachmentsMade;
-            TaskList.Remove(existingTask);
+            taskList.Remove(existingTask);
             Debug.Log("Task continued: " + task.taskNumber + ", attachments made: " + task.attachmentsMade);
         }
 
-        TaskList.Add(task);
+        taskList.Add(task);
 
         Debug.Log("Task Started: " + task.taskNumber);
     }
@@ -55,7 +55,7 @@ public class TaskManager : MonoBehaviour
             TaskText taskText = taskTextList.Find(x => x.taskNumber == taskNumber);
             taskText.CrossOut();
             AudioManager.Instance.PlaySoundEffect(5);
-            TaskList.Remove(task);
+            taskList.Remove(task);
             Debug.Log("Task " + task.taskNumber + " complete!");
 
             tasksCompleted++;
@@ -69,7 +69,7 @@ public class TaskManager : MonoBehaviour
 
     public bool CheckIfTaskInList(int taskNumber, out Task task)
     {
-        task = TaskList.Find(x => x.taskNumber == taskNumber);
+        task = taskList.Find(x => x.taskNumber == taskNumber);
 
         return task != null;
     }
@@ -107,7 +107,6 @@ public class TaskManager : MonoBehaviour
             FinishTask(task.taskNumber);
             task.rootObject.SpawnModel();
             Debug.Log("Model spawned");
-            Debug.Log(TaskList.Count);
         }
     }
 }
