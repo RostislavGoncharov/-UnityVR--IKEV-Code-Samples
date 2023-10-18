@@ -37,6 +37,8 @@ public class Speaker : XRBaseInteractable, IInteractable
 
     public void PlayClip(int index)
     {
+        StopAllCoroutines();
+        
         SelectClip(index);
         audioSource.Play();
         StartCoroutine(WaitForEndOfClip());
