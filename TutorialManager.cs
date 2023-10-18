@@ -139,6 +139,10 @@ public class TutorialManager : MonoBehaviour
                 tv.ToggleUI(true);
                 break;
 
+            case 3:
+                GameManager.Instance.SpawnBox(0);
+                break;
+
             default:
                 break;
         }
