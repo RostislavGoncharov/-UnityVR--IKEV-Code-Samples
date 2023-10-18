@@ -9,15 +9,12 @@ using System.Collections.Generic;
  */
 public class Box : XRGrabInteractableExtraAttach
 {
-    [SerializeField] InputActionReference openBoxReference = null;
     [SerializeField] List<GameObject> partsToSpawn;
     bool _isOnCarpet = false;
     bool _canBeOpened = false;
 
     string _canGrabPrompt = "Grip: Grab Box";
     string _canOpenPrompt = "Grip: Grab Box\nTrigger: Open Box";
-
-    static bool instructionShown = false;
 
     protected override void OnEnable()
     {
