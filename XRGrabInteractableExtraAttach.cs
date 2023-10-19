@@ -39,11 +39,6 @@ public class XRGrabInteractableExtraAttach : XRGrabInteractable, IInteractable
             AudioManager.Instance.PlaySoundEffect(2);
 
             OnInteract(new InputAction.CallbackContext());
-
-            if (GetComponent<Box>() != null)
-            {
-                GameManager.Instance.SetBoxPickedUp(true);
-            }
         }
 
         base.OnSelectEntered(args);
