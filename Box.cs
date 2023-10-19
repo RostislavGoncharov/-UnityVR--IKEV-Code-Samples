@@ -10,6 +10,8 @@ using System.Collections.Generic;
 public class Box : XRGrabInteractableExtraAttach
 {
     [SerializeField] List<GameObject> partsToSpawn;
+    [SerializeField] InputAction openBoxAction;
+
     bool _isOnCarpet = false;
     bool _canBeOpened = false;
 
@@ -93,7 +95,10 @@ public class Box : XRGrabInteractableExtraAttach
     {
         base.OnInteract(context);
 
-        OpenBox();
+        if (context.action.name == "InteractLeft" || context.action.name == "InteractRight")
+        {
+            OpenBox();
+        }
     }
     void DestroyBox()
     {
