@@ -95,6 +95,8 @@ public class Box : XRGrabInteractableExtraAttach
     {
         base.OnInteract(context);
 
+        GameManager.Instance.SetBoxPickedUp(true);
+
         if (context.action.name == "InteractLeft" || context.action.name == "InteractRight")
         {
             OpenBox();
