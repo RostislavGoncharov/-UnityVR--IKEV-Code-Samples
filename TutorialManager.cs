@@ -18,6 +18,9 @@ public class TutorialManager : MonoBehaviour
 {
     public static TutorialManager Instance { get; private set; }
 
+    public IBlinking stoolLeg;
+    public IBlinking stoolTop;
+
     [SerializeField] VideoPlayer videoPlayer;
     [SerializeField] TV tv;
     [SerializeField] Speaker speaker;
@@ -89,6 +92,15 @@ public class TutorialManager : MonoBehaviour
     public void MakeBookBlink()
     {
         book.Blink(true);
+    }
+
+    public void MakeStoolPartsBlink()
+    {
+        Debug.Log(stoolLeg);
+        Debug.Log(stoolTop);
+        
+        stoolLeg.Blink(true);
+        stoolTop.Blink(true);
     }
 
     public void HandleInstructionsButtonPress()
