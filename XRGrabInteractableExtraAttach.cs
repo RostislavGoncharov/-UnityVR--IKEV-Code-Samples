@@ -19,10 +19,17 @@ public class XRGrabInteractableExtraAttach : XRGrabInteractable, IInteractable
     public Transform socketAttachTransform;
 
     [SerializeField] InteractionLayerMask partLayers;
+    [SerializeField] string _grabPrompt;
 
     public bool canBeAttached = false;
 
     public string UIprompt { get; set; }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        UIprompt = _grabPrompt;
+    }
 
     /*
      * Separate the grab transform from the attach transform.
