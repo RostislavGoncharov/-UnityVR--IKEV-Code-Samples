@@ -55,7 +55,7 @@ public class Box : XRGrabInteractableExtraAttach
         }
     }
 
-    void OpenBox()
+    protected virtual void OpenBox()
     {
         if (_canBeOpened && _isOnCarpet)
         {
@@ -63,7 +63,7 @@ public class Box : XRGrabInteractableExtraAttach
         }
     }
 
-    public void SpawnParts()
+    public virtual void SpawnParts()
     {
         DestroyBox();
 
