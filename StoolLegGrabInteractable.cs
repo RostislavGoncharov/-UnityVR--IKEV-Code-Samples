@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
 /*
@@ -6,16 +9,31 @@ using UnityEngine.XR.Interaction.Toolkit;
  * (otherwise two parts could be attached in the same space).
  */
 
-public class StoolLegGrabInteractable : XRGrabInteractableExtraAttach
+public class StoolLegGrabInteractable : XRGrabInteractableExtraAttach, IBlinking
 {
-    bool attachedToTop = false;
+    [SerializeField] Material blinkMaterial;
 
     public delegate void SetOpposingLegSocketActive(bool activeValue);
     public SetOpposingLegSocketActive onDeactivateOpposingLegSocket;
-    
+
+    bool _attachedToTop = false;
+
+    MeshRenderer _meshRenderer;
+    List<Material> _materials = new List<Material>();
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        if (!TryGetComponent<MeshRenderer>(out _meshRenderer))
+        {
+            Debug.Log("Leg: No MeshRenderer found");
+        }
+    }
+
     public void OnPartInteraction(bool value)
     {
-        if (attachedToTop)
+        if (_attachedToTop)
         {
             onDeactivateOpposingLegSocket?.Invoke(value);
         }
@@ -25,7 +43,7 @@ public class StoolLegGrabInteractable : XRGrabInteractableExtraAttach
     {
         if (args.interactorObject.transform.CompareTag("StoolTopSocket"))
         {
-            attachedToTop = true;
+            _attachedToTop = true;
         }
 
         base.OnSelectEntered(args);
@@ -33,11 +51,35 @@ public class StoolLegGrabInteractable : XRGrabInteractableExtraAttach
 
     protected override void OnSelectExited(SelectExitEventArgs args)
     {
-        attachedToTop = false;
+        _attachedToTop = false;
 
         ExtendedSocketInteractor socket = GetComponentInChildren<ExtendedSocketInteractor>();
         socket.enabled = true;
 
         base.OnSelectExited(args);
+    }
+
+    public override void OnInteract(InputAction.CallbackContext context)
+    {
+        Blink(false);
+    }
+
+    public void Blink(bool shouldBlink)
+    {
+        if (shouldBlink)
+        {
+            _meshRenderer.GetMaterials(_materials);
+            _meshRenderer.materials = new Material[] { _materials[0], blinkMaterial };
+        }
+        else
+        {
+            // Remove the blinking material if it's present    
+            _meshRenderer.GetMaterials(_materials);
+
+            if (_materials.Count > 1)
+            {
+                _meshRenderer.materials = new Material[] { _materials[0] };
+            }
+        }
     }
 }
