@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.XR.Interaction.Toolkit;
 
 /*
 * This class implements the behaviour of the book used in Task 2 in the game.
@@ -18,8 +17,6 @@ public class Book : XRGrabInteractableExtraAttach, IBlinking
     protected override void Awake()
     {
         base.Awake();
-
-        UIprompt = "Grip: Grab Book";
 
         if (!TryGetComponent<MeshRenderer>(out _meshRenderer))
         {
