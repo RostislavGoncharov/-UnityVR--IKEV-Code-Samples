@@ -74,21 +74,27 @@ public class TaskManager : MonoBehaviour
         return task != null;
     }
 
-    public void IncrementAttachments(int taskNumber)
+    public int IncrementAttachments(int taskNumber)
     {
         Task task;
         bool taskIsInList = CheckIfTaskInList(taskNumber, out task);
 
         if (taskIsInList)
         {
-            Debug.Log("incrementing");
             task.attachmentsMade++;
-            Debug.Log("Part attached! Attachments made: " + task.attachmentsMade);
+            int _attachments = task.attachmentsMade;
+            Debug.Log($"Part unattached! Attachments made: {task.attachmentsMade}, task number: {taskNumber}");
             CheckCompletion(task);
+
+            return _attachments;
+        }
+        else
+        {
+            return -1;
         }
     }
 
-    public void DecrementAttachments(int taskNumber)
+    public int DecrementAttachments(int taskNumber)
     {
         Task task = null;
         bool taskIsInList = CheckIfTaskInList(taskNumber, out task);
@@ -96,7 +102,12 @@ public class TaskManager : MonoBehaviour
         if (taskIsInList)
         {
             task.attachmentsMade--;
-            Debug.Log("Part unattached! Attachments made: " + task.attachmentsMade);
+            Debug.Log($"Part unattached! Attachments made: {task.attachmentsMade}, task number: {taskNumber}");
+            return task.attachmentsMade;
+        }
+        else
+        {
+            return -1;
         }
     }
 
