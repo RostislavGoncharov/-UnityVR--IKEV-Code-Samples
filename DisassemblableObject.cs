@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 /* This class handles the functionality of a disassemblable object:
  * it spawns the parts from the list, then destroys the object itself.
  */
 
-public class DisassemblableObject : MonoBehaviour
+public class DisassemblableObject : XRBaseInteractable
 {
     [SerializeField] List<GameObject> parts = new List<GameObject>();
     
