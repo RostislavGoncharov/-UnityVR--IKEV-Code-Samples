@@ -11,7 +11,6 @@ public class RootObject : MonoBehaviour
 {
     public int attachmentsNeeded;
     public int nextBoxIndex = -1;
-    //public int tvScreenIndex;
 
     [SerializeField] GameObject assembledModel;
     [SerializeField] List<string> partTags = new List<string>();
