@@ -29,6 +29,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] TaskText speakerTaskText;
     [SerializeField] GameObject taskList;
     [SerializeField] Carpet carpet;
+    [SerializeField] GameObject plantDisassemblable;
 
     string _teleportationAreaFloorTag = "Floor";
     string _teleportationAreaTVTag = "TVArea";
@@ -47,9 +48,9 @@ public class TutorialManager : MonoBehaviour
             Instance = this;
         }
 
+        book.enabled = false;
         speaker.enabled = false;
         Speaker.onHandleClipEnd += HandleClipEnd;
-        book.enabled = false;
     }
 
     private void Start()
@@ -95,12 +96,14 @@ public class TutorialManager : MonoBehaviour
     }
 
     public void MakeStoolPartsBlink()
-    {
-        Debug.Log(stoolLeg);
-        Debug.Log(stoolTop);
-        
+    {       
         stoolLeg.Blink(true);
         stoolTop.Blink(true);
+    }
+
+    public void MakePlantBlink()
+    {
+        plantDisassemblable.GetComponent<PlantDisassemblable>().enabled = true;
     }
 
     public void HandleInstructionsButtonPress()
