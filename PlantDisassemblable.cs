@@ -1,19 +1,26 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class PlantDisassemblable : DisassemblableObject, IBlinking
+public class PlantDisassemblable : DisassemblableObject, IBlinking, IInteractable
 {
     [SerializeField] Material blinkMaterial;
+    [SerializeField] MeshRenderer _meshRenderer;
 
-    MeshRenderer _meshRenderer;
     List<Material> _materials = new List<Material>();
 
-    private void Awake()
+    public string UIprompt { get; set; }
+
+    protected override void Awake()
     {
-        if (!TryGetComponent<MeshRenderer>(out _meshRenderer))
-        {
-            Debug.Log("Plant: No MeshRenderer found");
-        }
+        base.Awake();
+
+        UIprompt = "Trigger: Disassemble Plant";
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
 
         Blink(true);
     }
@@ -35,5 +42,25 @@ public class PlantDisassemblable : DisassemblableObject, IBlinking
                 _meshRenderer.materials = new Material[] { _materials[0] };
             }
         }
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        Disassemble();
+    }
+
+    public void OnInteractionFinished()
+    {
+        return;
+    }
+
+    public void OnHover()
+    {
+        return;
+    }
+
+    public void OnHoverFinished()
+    {
+        return;
     }
 }
