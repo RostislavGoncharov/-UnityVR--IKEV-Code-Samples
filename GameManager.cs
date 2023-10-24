@@ -103,7 +103,12 @@ public class GameManager : MonoBehaviour
 
     public void IncrementAttachments(int taskNumber)
     {
-        _taskManager.IncrementAttachments(taskNumber);
+        int _attachmentsMade = _taskManager.IncrementAttachments(taskNumber);
+        
+        if (taskNumber == 4 && _attachmentsMade == 2)
+        {
+            TutorialManager.Instance.MakePlantBlink();
+        }
     }
 
     public void DecrementAttachments(int taskNumber)
