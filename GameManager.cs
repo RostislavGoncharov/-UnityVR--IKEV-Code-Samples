@@ -108,6 +108,7 @@ public class GameManager : MonoBehaviour
         if (taskNumber == 4 && _attachmentsMade == 2)
         {
             TutorialManager.Instance.MakePlantBlink();
+            TutorialManager.Instance.PlaySpeakerClip(4);
         }
     }
 
