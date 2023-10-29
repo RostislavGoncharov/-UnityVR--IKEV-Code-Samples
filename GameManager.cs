@@ -27,7 +27,8 @@ public class GameManager : MonoBehaviour
 
     TaskManager _taskManager;
 
-    bool boxPickedUp = false;
+    bool _boxPickedUp = false;
+    bool _disassembleClipPlayed = false;
 
     private void Awake()
     {
@@ -105,10 +106,11 @@ public class GameManager : MonoBehaviour
     {
         int _attachmentsMade = _taskManager.IncrementAttachments(taskNumber);
         
-        if (taskNumber == 4 && _attachmentsMade == 2)
+        if (taskNumber == 4 && _attachmentsMade == 2 && !_disassembleClipPlayed)
         {
             TutorialManager.Instance.MakePlantBlink();
             TutorialManager.Instance.PlaySpeakerClip(4);
+            _disassembleClipPlayed = true;
         }
     }
 
@@ -143,7 +145,7 @@ public class GameManager : MonoBehaviour
         }
 
         Box box = Instantiate(boxList[boxIndex], boxSpawnPoint);
-        boxPickedUp = false;
+        _boxPickedUp = false;
         StartCoroutine(RingBell());
     }
 
@@ -151,7 +153,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
 
-        while(!boxPickedUp)
+        while(!_boxPickedUp)
         {
             AudioManager.Instance.PlaySoundEffect(3);
             yield return new WaitForSeconds(5);
@@ -160,7 +162,7 @@ public class GameManager : MonoBehaviour
 
     public void SetBoxPickedUp(bool value)
     {
-        boxPickedUp = value;
+        _boxPickedUp = value;
     }
 
     public void SelectTVImage(int index)
