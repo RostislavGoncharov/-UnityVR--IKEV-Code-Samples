@@ -72,7 +72,7 @@ public class Speaker : XRBaseInteractable, IInteractable
             UIprompt = _turnOffPrompt;
         }
 
-        AudioManager.Instance.ToggleEnvironmentSounds(true);
+        GameManager.Instance.IncreaseLightingIntensity(1.2f);
     }
 
     void IInteractable.OnInteractionFinished()
