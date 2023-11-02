@@ -149,6 +149,11 @@ public class GameManager : MonoBehaviour
         StartCoroutine(RingBell());
     }
 
+    public void IncreaseLightingIntensity(float targetIntensity)
+    {
+        StartCoroutine(IncreaseAmbientIntensity(targetIntensity));
+    }
+
     IEnumerator RingBell()
     {
         yield return new WaitForSeconds(2);
@@ -157,6 +162,15 @@ public class GameManager : MonoBehaviour
         {
             AudioManager.Instance.PlaySoundEffect(3);
             yield return new WaitForSeconds(5);
+        }
+    }
+
+    IEnumerator IncreaseAmbientIntensity(float targetIntensity)
+    {
+        while (RenderSettings.ambientIntensity < targetIntensity)
+        {
+            RenderSettings.ambientIntensity += 0.01f;
+            yield return new WaitForSeconds(0.05f);
         }
     }
 
