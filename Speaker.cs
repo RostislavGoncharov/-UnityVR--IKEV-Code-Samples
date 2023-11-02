@@ -72,7 +72,7 @@ public class Speaker : XRBaseInteractable, IInteractable
             UIprompt = _turnOffPrompt;
         }
 
-        GameManager.Instance.IncreaseLightingIntensity(1.2f);
+        GameManager.Instance.IncreaseLightingIntensity(0.9f);
     }
 
     void IInteractable.OnInteractionFinished()
