@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class StoolBox : Box, IBlinking
 {
@@ -38,19 +39,22 @@ public class StoolBox : Box, IBlinking
             }
         }
     }
-    public override void OnInteract(InputAction.CallbackContext context)
-    {
-        base.OnInteract(context);
 
+    protected override void OnSelectEntered(SelectEnterEventArgs args)
+    {
         Blink(false);
         TutorialManager.Instance.MakeCarpetBlink(true);
+        TutorialManager.Instance.PlaySpeakerClip(4);
+
+        base.OnSelectEntered(args);
     }
-    public override void OnInteractionFinished()
+
+    protected override void OnSelectExited(SelectExitEventArgs args)
     {
-        base.OnInteractionFinished();
-        
         Blink(true);
         TutorialManager.Instance.MakeCarpetBlink(false);
+
+        base.OnSelectExited(args);
     }
 
     protected override void OpenBox()
