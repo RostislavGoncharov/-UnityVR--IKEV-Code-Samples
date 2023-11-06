@@ -86,6 +86,11 @@ public class TutorialManager : MonoBehaviour
         speaker.PlayClip(index);
     }
 
+    public void MakeCarpetBlink(bool shouldBlink)
+    {
+        carpet.Blink(shouldBlink);
+    }
+
     public void MakeBookBlink()
     {
         book.Blink(true);
