@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit;
 
 /*
 * This class implements the behaviour of the book used in Task 2 in the game.
@@ -24,10 +25,20 @@ public class Book : XRGrabInteractableExtraAttach, IBlinking
         }
     }
 
-    public override void OnInteract(InputAction.CallbackContext context)
+    protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
+        base.OnSelectEntered(args);
+
         Blink(false);
         bookSocketMesh.SetActive(true);
+    }
+
+    protected override void OnSelectExited(SelectExitEventArgs args)
+    {
+        base.OnSelectExited(args);
+
+        Blink(true);
+        bookSocketMesh.SetActive(false);
     }
 
     public void Blink(bool shouldBlink)
@@ -47,12 +58,6 @@ public class Book : XRGrabInteractableExtraAttach, IBlinking
                 _meshRenderer.materials = new Material[] { _materials[0] };
             }
         }
-    }
-
-    public override void OnInteractionFinished()
-    {
-        Blink(true);
-        bookSocketMesh.SetActive(false);
     }
 
     public override void OnHover()
