@@ -48,10 +48,6 @@ public class TaskManager : MonoBehaviour
                 GameManager.Instance.SpawnBox(task.nextBoxIndex);
             }
 
-            //if (task.tvScreenIndex != 0)
-            //{
-            //    GameManager.Instance.SelectTVImage(task.tvScreenIndex);
-            //}
             TaskText taskText = taskTextList.Find(x => x.taskNumber == taskNumber);
             taskText.CrossOut();
             AudioManager.Instance.PlaySoundEffect(5);
