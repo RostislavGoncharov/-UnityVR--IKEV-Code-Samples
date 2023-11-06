@@ -101,6 +101,7 @@ public class Box : XRGrabInteractableExtraAttach
             OpenBox();
         }
     }
+
     void DestroyBox()
     {
         Destroy(this.gameObject);
