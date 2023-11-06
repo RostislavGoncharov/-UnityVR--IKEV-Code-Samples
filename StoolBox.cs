@@ -43,12 +43,14 @@ public class StoolBox : Box, IBlinking
         base.OnInteract(context);
 
         Blink(false);
+        TutorialManager.Instance.MakeCarpetBlink(true);
     }
     public override void OnInteractionFinished()
     {
         base.OnInteractionFinished();
         
         Blink(true);
+        TutorialManager.Instance.MakeCarpetBlink(false);
     }
 
     protected override void OpenBox()
