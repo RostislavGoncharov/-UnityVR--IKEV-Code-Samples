@@ -46,6 +46,8 @@ public class StoolLegGrabInteractable : XRGrabInteractableExtraAttach, IBlinking
             _attachedToTop = true;
         }
 
+        Blink(false);
+
         base.OnSelectEntered(args);
     }
 
@@ -57,11 +59,6 @@ public class StoolLegGrabInteractable : XRGrabInteractableExtraAttach, IBlinking
         socket.enabled = true;
 
         base.OnSelectExited(args);
-    }
-
-    public override void OnInteract(InputAction.CallbackContext context)
-    {
-        Blink(false);
     }
 
     public void Blink(bool shouldBlink)
