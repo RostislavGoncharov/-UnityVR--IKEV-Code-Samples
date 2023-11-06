@@ -117,11 +117,6 @@ public class GameManager : MonoBehaviour
         _taskManager.FinishTask(taskNumber);
     }
 
-    public void ShowEndMessage()
-    {
-        endMessage.gameObject.SetActive(true);
-    }
-
     //Logic for box spawning
 
     public void SpawnBox(int boxIndex)

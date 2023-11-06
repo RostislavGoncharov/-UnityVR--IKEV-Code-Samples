@@ -58,7 +58,7 @@ public class TaskManager : MonoBehaviour
 
             if (tasksCompleted >= tasksTotal)
             {
-                GameManager.Instance.ShowEndMessage();
+                TutorialManager.Instance.PlaySpeakerClip(8);
             }
         }
     }
