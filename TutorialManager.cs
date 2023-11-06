@@ -116,7 +116,13 @@ public class TutorialManager : MonoBehaviour
             PlaySpeakerClip(2);
             book.enabled = true;
             book.Blink(true);
+            tv.SelectImage(3);
         }
+    }
+
+    public void HandleBoxOpen()
+    {
+        tv.SelectImage(4);
     }
 
     void ToggleVideoPlayer(bool value)
@@ -134,13 +140,15 @@ public class TutorialManager : MonoBehaviour
             carpet.transform.tag = _teleportationAreaTVTag;
             GameManager.Instance.SetTeleportationTag(_teleportationAreaTVTag);
             ToggleVideoPlayer(false);
-            tv.SelectImage(4);
+            tv.SelectImage(1);
         }
 
         if (vp.clip == videos[1])
         {
             speaker.enabled = true;
             speaker.SelectClip(0);
+            ToggleVideoPlayer(false);
+            tv.SelectImage(2);
         }
 
         GameManager.Instance.MakeControllersVibrate(0.5f, 1.0f);
@@ -153,6 +161,11 @@ public class TutorialManager : MonoBehaviour
             case 0:
                 PlaySpeakerClip(1);
                 tv.ToggleUI(true);
+                tv.SelectImage(0);
+                break;
+
+            case 2:
+                tv.SelectImage(3);
                 break;
 
             case 3:

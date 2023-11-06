@@ -20,6 +20,7 @@ public class StoolTop : XRGrabInteractableExtraAttach, IBlinking
         }
 
         TutorialManager.Instance.PlaySpeakerClip(5);
+        TutorialManager.Instance.HandleBoxOpen();
     }
 
     public void Blink(bool shouldBlink)
