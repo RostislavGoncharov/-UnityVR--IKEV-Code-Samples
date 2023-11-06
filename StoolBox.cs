@@ -64,9 +64,9 @@ public class StoolBox : Box, IBlinking
         base.OnSelectExited(args);
     }
 
-    public override void OnInteractionFinished(InputAction.CallbackContext context)
+    public override void OnInteractionFinished()
     {
-        base.OnInteractionFinished(context);
+        base.OnInteractionFinished();
 
         TutorialManager.Instance.PlaySpeakerClip(5);
     }

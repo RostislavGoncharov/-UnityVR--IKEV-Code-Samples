@@ -59,7 +59,7 @@ public class XRGrabInteractableExtraAttach : XRGrabInteractable, IInteractable
         }
 
         SetAttachTransform();
-        OnInteractionFinished(new InputAction.CallbackContext());
+        OnInteractionFinished();
 
         base.OnSelectExited(args);
     }
@@ -103,7 +103,7 @@ public class XRGrabInteractableExtraAttach : XRGrabInteractable, IInteractable
         return;
     }
 
-    public virtual void OnInteractionFinished(InputAction.CallbackContext context)
+    public virtual void OnInteractionFinished()
     {
         return;
     }

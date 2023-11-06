@@ -75,7 +75,7 @@ public class Speaker : XRBaseInteractable, IInteractable
         GameManager.Instance.IncreaseLightingIntensity(0.9f);
     }
 
-    void IInteractable.OnInteractionFinished(InputAction.CallbackContext context)
+    void IInteractable.OnInteractionFinished()
     {
         return;
     }

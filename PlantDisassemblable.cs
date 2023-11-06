@@ -49,7 +49,7 @@ public class PlantDisassemblable : DisassemblableObject, IBlinking, IInteractabl
         Disassemble();
     }
 
-    public void OnInteractionFinished(InputAction.CallbackContext context)
+    public void OnInteractionFinished()
     {
         return;
     }
