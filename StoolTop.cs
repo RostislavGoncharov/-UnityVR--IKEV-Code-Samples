@@ -17,6 +17,8 @@ public class StoolTop : XRGrabInteractableExtraAttach, IBlinking
         {
             Debug.Log("Top: No MeshRenderer found");
         }
+
+        TutorialManager.Instance.PlaySpeakerClip(5);
     }
 
     public void Blink(bool shouldBlink)
