@@ -49,7 +49,7 @@ public class Book : XRGrabInteractableExtraAttach, IBlinking
         }
     }
 
-    public override void OnInteractionFinished()
+    public override void OnInteractionFinished(InputAction.CallbackContext context)
     {
         Blink(true);
         bookSocketMesh.SetActive(false);
