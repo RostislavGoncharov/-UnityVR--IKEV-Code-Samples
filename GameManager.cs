@@ -23,8 +23,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] Image endMessage;
     [SerializeField] int tasksTotal;
 
-    //public bool isTestEnv = false;
-
     TaskManager _taskManager;
 
     bool _boxPickedUp = false;
@@ -41,7 +39,6 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
 
-        //if (!isTestEnv)
         {
             ToggleControllers(false);
             AudioManager.Instance.ToggleEnvironmentSounds(true);
@@ -55,15 +52,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //if (!isTestEnv)
-        //{
-        //    TutorialManager.Instance.BeginTutorial();
-        //}
-        //else
-        //{
-        //    tv.ToggleUI(true);
-        //}
-
         TutorialManager.Instance.BeginTutorial();
     }
 
