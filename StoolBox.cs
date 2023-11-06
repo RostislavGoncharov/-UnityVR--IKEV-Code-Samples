@@ -44,6 +44,12 @@ public class StoolBox : Box, IBlinking
 
         Blink(false);
     }
+    public override void OnInteractionFinished()
+    {
+        base.OnInteractionFinished();
+        
+        Blink(true);
+    }
 
     protected override void OpenBox()
     {
