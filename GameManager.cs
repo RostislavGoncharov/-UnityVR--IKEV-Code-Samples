@@ -109,7 +109,7 @@ public class GameManager : MonoBehaviour
         if (taskNumber == 4 && _attachmentsMade == 2 && !_disassembleClipPlayed)
         {
             TutorialManager.Instance.MakePlantBlink();
-            TutorialManager.Instance.PlaySpeakerClip(4);
+            TutorialManager.Instance.PlaySpeakerClip(5);
             _disassembleClipPlayed = true;
         }
     }
