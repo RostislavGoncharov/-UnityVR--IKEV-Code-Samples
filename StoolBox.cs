@@ -64,13 +64,6 @@ public class StoolBox : Box, IBlinking
         base.OnSelectExited(args);
     }
 
-    public override void OnInteractionFinished()
-    {
-        base.OnInteractionFinished();
-
-        TutorialManager.Instance.PlaySpeakerClip(5);
-    }
-
     protected override void OpenBox()
     {
         base.OpenBox();
