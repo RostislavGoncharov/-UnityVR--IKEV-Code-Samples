@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class StoolTop : XRGrabInteractableExtraAttach, IBlinking
 {
@@ -40,8 +41,10 @@ public class StoolTop : XRGrabInteractableExtraAttach, IBlinking
         }
     }
 
-    public override void OnInteract(InputAction.CallbackContext context)
+    protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
+        base.OnSelectEntered(args);
+
         Blink(false);
     }
 }
