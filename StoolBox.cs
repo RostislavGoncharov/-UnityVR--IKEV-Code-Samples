@@ -10,6 +10,8 @@ public class StoolBox : Box, IBlinking
     MeshRenderer _meshRenderer;
     List<Material> _materials = new List<Material>();
 
+    bool _hasVoiceoverPlayed = false;
+
     protected override void Awake()
     {
         base.Awake();
@@ -44,7 +46,12 @@ public class StoolBox : Box, IBlinking
     {
         Blink(false);
         TutorialManager.Instance.MakeCarpetBlink(true);
-        TutorialManager.Instance.PlaySpeakerClip(4);
+
+        if (!_hasVoiceoverPlayed)
+        {
+            TutorialManager.Instance.PlaySpeakerClip(4);
+            _hasVoiceoverPlayed = true;
+        }
 
         base.OnSelectEntered(args);
     }
@@ -57,9 +64,9 @@ public class StoolBox : Box, IBlinking
         base.OnSelectExited(args);
     }
 
-    public override void OnInteractionFinished()
+    public override void OnInteractionFinished(InputAction.CallbackContext context)
     {
-        base.OnInteractionFinished();
+        base.OnInteractionFinished(context);
 
         TutorialManager.Instance.PlaySpeakerClip(5);
     }
