@@ -116,13 +116,14 @@ public class TutorialManager : MonoBehaviour
             PlaySpeakerClip(2);
             book.enabled = true;
             book.Blink(true);
-            tv.SelectImage(3);
+            tv.ToggleScreen(true);
+            tv.SelectImage(2);
         }
     }
 
     public void HandleBoxOpen()
     {
-        tv.SelectImage(4);
+        tv.SelectImage(3);
     }
 
     void ToggleVideoPlayer(bool value)
@@ -140,7 +141,7 @@ public class TutorialManager : MonoBehaviour
             carpet.transform.tag = _teleportationAreaTVTag;
             GameManager.Instance.SetTeleportationTag(_teleportationAreaTVTag);
             ToggleVideoPlayer(false);
-            tv.SelectImage(1);
+            tv.SelectImage(0);
         }
 
         if (vp.clip == videos[1])
@@ -148,7 +149,7 @@ public class TutorialManager : MonoBehaviour
             speaker.enabled = true;
             speaker.SelectClip(0);
             ToggleVideoPlayer(false);
-            tv.SelectImage(2);
+            tv.SelectImage(1);
         }
 
         GameManager.Instance.MakeControllersVibrate(0.5f, 1.0f);
@@ -161,11 +162,11 @@ public class TutorialManager : MonoBehaviour
             case 0:
                 PlaySpeakerClip(1);
                 tv.ToggleUI(true);
-                tv.SelectImage(0);
+                tv.ToggleScreen(false);
                 break;
 
             case 2:
-                tv.SelectImage(3);
+                tv.SelectImage(2);
                 break;
 
             case 3:
