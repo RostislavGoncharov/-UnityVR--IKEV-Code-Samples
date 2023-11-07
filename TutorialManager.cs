@@ -124,6 +124,7 @@ public class TutorialManager : MonoBehaviour
     public void HandleBoxOpen()
     {
         tv.SelectImage(3);
+        tv.ToggleInstructionButtons(true);
     }
 
     void ToggleVideoPlayer(bool value)
@@ -141,6 +142,7 @@ public class TutorialManager : MonoBehaviour
             carpet.transform.tag = _teleportationAreaTVTag;
             GameManager.Instance.SetTeleportationTag(_teleportationAreaTVTag);
             ToggleVideoPlayer(false);
+            tv.ToggleScreen(true);
             tv.SelectImage(0);
         }
 
