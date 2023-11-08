@@ -132,6 +132,11 @@ public class GameManager : MonoBehaviour
         StartCoroutine(RingBell());
     }
 
+    public void ShowEndMessage()
+    {
+        endMessage.gameObject.SetActive(true);
+    }
+
     public void IncreaseLightingIntensity(float targetIntensity)
     {
         StartCoroutine(IncreaseAmbientIntensity(targetIntensity));
