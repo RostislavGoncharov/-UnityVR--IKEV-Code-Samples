@@ -44,8 +44,11 @@ public class StoolBox : Box, IBlinking
 
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
-        Blink(false);
-        TutorialManager.Instance.MakeCarpetBlink(true);
+        if (args.interactorObject.transform.tag == "Hand")
+        {
+            Blink(false);
+            TutorialManager.Instance.MakeCarpetBlink(true);
+        }  
 
         if (!_hasVoiceoverPlayed)
         {
@@ -58,8 +61,11 @@ public class StoolBox : Box, IBlinking
 
     protected override void OnSelectExited(SelectExitEventArgs args)
     {
-        Blink(true);
-        TutorialManager.Instance.MakeCarpetBlink(false);
+        if (args.interactorObject.transform.tag == "Hand")
+        {
+            Blink(true);
+            TutorialManager.Instance.MakeCarpetBlink(false);
+        }
 
         base.OnSelectExited(args);
     }
