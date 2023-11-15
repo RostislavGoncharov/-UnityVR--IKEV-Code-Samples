@@ -5,7 +5,7 @@ using UnityEngine;
  * This class handles the functions of a "root object"
  * which defines the number of correct attachments needed to spawn the assembled model,
  * the index of the next box to spawn after successful assembly,
- * and the index of the instruction to show.
+ * and the task number.
  */
 public class RootObject : MonoBehaviour
 {
