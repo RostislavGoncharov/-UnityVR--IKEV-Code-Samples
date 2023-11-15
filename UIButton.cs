@@ -1,7 +1,12 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.UI;
+
+/*
+ * This class allows the UI pop-up to appear over the controller model
+ * when hovering over a UI button.
+ * It is necessary because IInteractable doesn't work with UI elements.
+ */
 
 public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
