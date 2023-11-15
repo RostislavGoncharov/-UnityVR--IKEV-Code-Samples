@@ -1,6 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/*
+ * This class handles player interactions with the lamp
+ * (grabbing the lamp, switching the light on and off).
+ */
 public class Lamp : XRGrabInteractableExtraAttach
 {
     [SerializeField] Light pointLight;
