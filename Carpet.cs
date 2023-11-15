@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * This class ensures that the carpet can be set to blink.
+ */
 public class Carpet : MonoBehaviour, IBlinking
 {
     [SerializeField] Material blinkMaterial;
