@@ -2,6 +2,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/*
+ * This class handles player interactions with the plant
+ * while it's in a disassemblable state.
+ * This script should be attached to the Palm Disassemblable prefab.
+ */
 public class PlantDisassemblable : DisassemblableObject, IBlinking, IInteractable
 {
     [SerializeField] Material blinkMaterial;
