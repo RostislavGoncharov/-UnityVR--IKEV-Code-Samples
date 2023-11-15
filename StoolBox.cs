@@ -1,8 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/*
+ * This class handles the functionality of the box containing stool parts.
+ * It ensures that the box can blink and that a relevant voiceover clip
+ * is played upon first interaction.
+ */
 public class StoolBox : Box, IBlinking
 {
     [SerializeField] Material blinkMaterial;
