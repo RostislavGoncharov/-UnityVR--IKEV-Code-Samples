@@ -1,7 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
+
+/*
+ * This class handles the stool top functionality.
+ * The stool top acts as a root object for the stool,
+ * can blink,
+ * and triggers relevant methods of the TutorialManager when spawned.
+ */
 
 public class StoolTop : XRGrabInteractableExtraAttach, IBlinking
 {
